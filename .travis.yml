@@ -1,0 +1,24 @@
+language: python
+
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+
+install:
+  - pip install --editable . # Install it self
+  - pip install --upgrade pytest # Upgrade pytest to lastest
+  - pip install --upgrade pytest-cov # Upgrade pytest-cov to latest
+  - pip install codecov # Install coveralls
+
+script:
+  - pytest tests --cov=pygitrepo # Run unittest
+
+notifications:
+  slack: # Mute email notification
+    on_success: never
+    on_failure: never
+
+after_success:
+  - codecov # travis-ci will transfer data to codecov after success

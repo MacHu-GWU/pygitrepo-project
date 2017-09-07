@@ -1,0 +1,23 @@
+language: python
+
+python:
+{%- for py_ver in supported_py_ver_for_travis %}
+  - "{{ py_ver }}"
+{%- endfor %}
+
+install:
+  - pip install --editable . # Install it self
+  - pip install --upgrade pytest # Upgrade pytest to lastest
+  - pip install --upgrade pytest-cov # Upgrade pytest-cov to latest
+  - pip install codecov # Install coveralls
+
+script:
+  - pytest tests --cov={{ package_name }} # Run unittest
+
+notifications:
+  slack: # Mute email notification
+    on_success: never
+    on_failure: never
+
+after_success:
+  - codecov # travis-ci will transfer data to codecov after success
