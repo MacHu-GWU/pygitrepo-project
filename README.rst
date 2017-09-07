@@ -1,8 +1,8 @@
-.. image:: https://travis-ci.org/Machu-GWU/pygitrepo-project.svg?branch=master
-    :target: https://travis-ci.org/Machu-GWU/pygitrepo-project?branch=master
+.. image:: https://travis-ci.org/MacHu-GWU/pygitrepo-project.svg?branch=master
+    :target: https://travis-ci.org/MacHu-GWU/pygitrepo-project?branch=master
 
-.. image:: https://codecov.io/gh/Machu-GWU/pygitrepo-project/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/Machu-GWU/pygitrepo-project
+.. image:: https://codecov.io/gh/MacHu-GWU/pygitrepo-project/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/MacHu-GWU/pygitrepo-project
 
 .. image:: https://img.shields.io/pypi/v/pygitrepo.svg
     :target: https://pypi.python.org/pypi/pygitrepo
@@ -14,7 +14,7 @@
     :target: https://pypi.python.org/pypi/pygitrepo
 
 .. image:: https://img.shields.io/badge/Star_Me_on_GitHub!--None.svg?style=social
-    :target: https://github.com/Machu-GWU/pygitrepo-project
+    :target: https://github.com/MacHu-GWU/pygitrepo-project
 
 
 Welcome to ``pygitrepo`` Documentation
@@ -51,10 +51,10 @@ Quick Links
       :target: `install`_
 
 - .. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
-      :target: https://github.com/Machu-GWU/pygitrepo-project
+      :target: https://github.com/MacHu-GWU/pygitrepo-project
 
 - .. image:: https://img.shields.io/badge/Link-Submit_Issue_and_Feature_Request-blue.svg
-      :target: https://github.com/Machu-GWU/pygitrepo-project/issues
+      :target: https://github.com/MacHu-GWU/pygitrepo-project/issues
 
 - .. image:: https://img.shields.io/badge/Link-Download-blue.svg
       :target: https://pypi.python.org/pypi/pygitrepo#downloads
