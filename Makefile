@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
-# This Makefile works for:
-# ``MacOS`` + ``pyenv`` + ``pyenv-virtualenv`` tool set
+#
+# This Makefile is a dev-ops tool set.
+# Compatible with:
+#
+# - Windows
+# - MacOS
+# - MacOS + pyenv + pyenv-virtualenv tool set
+# - Linux
 #
 # The file structure should like this:
 #
-# xxx-project
-#     |--- xxx (package source code dir)
+# repo_dir
+#     |--- source_dir (package source code dir)
 #         |--- __init__.py
 #         |--- ...
 #     |--- docs (documents dir)
@@ -15,6 +21,7 @@
 #         |--- make.bat (for windows)
 #         |--- create_doctree.py (a tools automatically build doc tree)
 #     |--- tests (unittest dir)
+#         |--- all.py (run all test from python)
 #     |--- README.rst (readme file)
 #     |--- release-history.rst
 #     |--- setup.py (installation behavior definition)
@@ -23,6 +30,9 @@
 #     |--- MANIFEST.in
 #     |--- tox.ini (tox setting)
 #     |--- .travis.yml (travis-ci setting)
+#     |--- .coveragerc (code coverage text setting)
+#     |--- .gitattributes (git attribute file)
+#     |--- .gitignore (git ignore file)
 #     |--- fixcode.py (autopep8 source code and unittest code)
 #
 # Frequently used make command:
@@ -264,6 +274,21 @@ build_doc: install_doc_deps dev_install ## Build Documents, force Update
 	)
 
 
+.PHONY: build_doc_again
+build_doc_again: dev_install ## Build Documents, Don't Check Dependencies
+	${BIN_PYTHON} ./docs/create_doctree.py
+	( \
+		source ${BIN_ACTIVATE}; \
+		cd docs; \
+		make html; \
+	)
+
+
+.PHONY: view_doc
+view_doc: ## Open Documents
+	${OPEN_COMMAND} ./docs/build/html/index.html
+
+
 .PHONY: deploy_doc
 deploy_doc: ##
 	aws s3 rm ${S3_PREFIX} --recursive
@@ -273,11 +298,6 @@ deploy_doc: ##
 .PHONY: clean_doc
 clean_doc: ## Clean Existing Documents
 	rm -r ./docs/build
-
-
-.PHONY: view_doc
-view_doc: ## Open Documents
-	${OPEN_COMMAND} ./docs/build/html/index.html
 
 
 .PHONY: reformat

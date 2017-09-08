@@ -1,3 +1,8 @@
+# A MANIFEST.in file can be added in a project to define the list of files
+# to include in the distribution built by the sdist command.
+#
+# For more info: https://docs.python.org/2/distutils/sourcedist.html#manifest-related-options
+
 include *.txt
 include *.rst
 recursive-include pygitrepo *.*

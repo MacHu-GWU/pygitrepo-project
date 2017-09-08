@@ -1,12 +1,7 @@
-.. contents::
-
-.. include:: ../../README.rst
-
 .. _structure:
 
 Project File Structure
-------------------------------------------------------------------------------
-
+==============================================================================
 `File Structure Example <https://github.com/MacHu-GWU/pygitrepo-project>`_:
 
     |--- :ref:`repo_name`
@@ -68,13 +63,3 @@ Project File Structure
         |--- :ref:`setup.py`
 
         |--- :ref:`tox.ini`
-
-
-.. include:: author.rst
-
-
-API Document
-------------
-
-* :ref:`by Name <genindex>`
-* :ref:`by Structure <modindex>`

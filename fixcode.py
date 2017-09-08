@@ -1,12 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+This script provides dev-ops tools for python project development.
+"""
+
 from __future__ import print_function
 from pathlib_mate import Path
 from setup import package
 
 
-def fixcode():
+def fixcode(**kwargs):
+    """
+    auto pep8 format all python file in ``source code`` and ``tests`` dir.
+    """
     # repository direcotry
     repo_dir = Path(__file__).parent.absolute()
 
@@ -16,7 +23,7 @@ def fixcode():
     if source_dir.exists():
         print("Source code locate at: '%s'." % source_dir)
         print("Auto pep8 all python file ...")
-        source_dir.autopep8()
+        source_dir.autopep8(**kwargs)
     else:
         print("Source code directory not found!")
 
@@ -25,7 +32,7 @@ def fixcode():
     if unittest_dir.exists():
         print("Unittest code locate at: '%s'." % unittest_dir)
         print("Auto pep8 all python file ...")
-        unittest_dir.autopep8()
+        unittest_dir.autopep8(**kwargs)
     else:
         print("Unittest code directory not found!")
 

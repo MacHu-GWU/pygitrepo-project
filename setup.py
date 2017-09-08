@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+The setup script is the centre of all activity in building, distributing,
+and installing modules using the Distutils. It is required for ``pip install``.
+
+See more: https://docs.python.org/2/distutils/setupscript.html
+"""
+
 from __future__ import print_function
 import os
 from datetime import date

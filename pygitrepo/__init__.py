@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __short_description__ = "Quickly initiate a python project from scratch."
 __license__ = "MIT"
 __author__ = "Sanhe Hu"

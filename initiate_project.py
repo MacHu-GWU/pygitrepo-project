@@ -7,7 +7,7 @@ This script call pygitrepo-init from python.
 
 from pygitrepo.cli import _initiate_project
 
-package_name = "pygitrepo"
+package_name = "test_blog"
 github_username = "MacHu-GWU"
 supported_py_ver = ["py27", "py34", "py35", "py36"]
 author_name = "Sanhe Hu"
