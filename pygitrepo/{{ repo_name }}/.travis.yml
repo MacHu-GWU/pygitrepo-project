@@ -15,9 +15,7 @@ script:
   - pytest tests --cov={{ package_name }} # Run unittest
 
 notifications:
-  slack: # Mute email notification
-    on_success: never
-    on_failure: never
+  email: false # Mute email notification
 
 after_success:
   - codecov # travis-ci will transfer data to codecov after success

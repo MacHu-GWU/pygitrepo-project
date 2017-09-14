@@ -74,6 +74,8 @@ USE_PYENV="Y"
 BUCKET_NAME="{{ s3_bucket }}"
 
 #--- Derive Other Variable ---
+CURRENT_DIR=${shell pwd}
+
 ifeq (${OS}, Windows_NT)
     DETECTED_OS := Windows
 else
@@ -84,9 +86,9 @@ endif
 ifeq (${DETECTED_OS}, Windows)
     USE_PYENV="N"
 
-    BIN_DIR="./${VENV_NAME}/Scripts"
-    VENV_DIR_REAL="./${VENV_NAME}"
-    SITE_PACKAGES="./${VENV_NAME}/Lib/site-packages"
+    VENV_DIR_REAL="${CURRENT_DIR}/${VENV_NAME}"
+    BIN_DIR="${VENV_DIR_REAL}/Scripts"
+    SITE_PACKAGES="${VENV_DIR_REAL}/Lib/site-packages"
 
     GLOBAL_PYTHON="/c/Python${PY_VER_MAJOR}${PY_VER_MINOR}/python.exe"
     OPEN_COMMAND="start"
@@ -97,14 +99,14 @@ endif
 ifeq (${DETECTED_OS}, Darwin)
 
 ifeq ($(USE_PYENV), "Y")
-    BIN_DIR="${HOME}/.pyenv/versions/${PY_VERSION}/envs/${VENV_NAME}/bin"
     VENV_DIR_REAL="${HOME}/.pyenv/versions/${PY_VERSION}/envs/${VENV_NAME}"
     VENV_DIR_LINK="${HOME}/.pyenv/versions/${VENV_NAME}"
+    BIN_DIR="${VENV_DIR_REAL}/bin"
     SITE_PACKAGES="${VENV_DIR_REAL}/lib/python${PY_VER_MAJOR}.${PY_VER_MINOR}/site-packages"
 else
-    BIN_DIR="./${VENV_NAME}/bin"
-    VENV_DIR_REAL="./${VENV_NAME}"
+    VENV_DIR_REAL="${CURRENT_DIR}/${VENV_NAME}"
     VENV_DIR_LINK="./${VENV_NAME}"
+    BIN_DIR="${VENV_DIR_REAL}/bin"
     SITE_PACKAGES="${VENV_DIR_REAL}/lib/python${PY_VER_MAJOR}.${PY_VER_MINOR}/site-packages"
 endif
 
@@ -117,9 +119,9 @@ endif
 ifeq (${DETECTED_OS}, Linux)
     USE_PYENV="N"
 
-    BIN_DIR="./${VENV_NAME}/bin"
-    VENV_DIR_REAL="./${VENV_NAME}"
-    VENV_DIR_LINK="./${VENV_NAME}"
+    VENV_DIR_REAL="${CURRENT_DIR}/${VENV_NAME}"
+    VENV_DIR_LINK="${CURRENT_DIR}/${VENV_NAME}"
+    BIN_DIR="${VENV_DIR_REAL}/bin"
     SITE_PACKAGES="${VENV_DIR_REAL}/lib/python${PY_VER_MAJOR}.${PY_VER_MINOR}/site-packages"
 
     GLOBAL_PYTHON="python${PY_VER_MAJOR}.${PY_VER_MINOR}"
@@ -148,11 +150,11 @@ help: ## Show this help message
 #--- Make Commands ---
 .PHONY: info
 info: ## Show information about python, pip in this environment
-	@echo - venv: ${VENV_DIR_REAL}
-	@echo - python executable: ${BIN_PYTHON}
-	@echo - pip executable: ${BIN_PIP}
-	@echo - document: ${DOC_URL}
-	@echo - site-packages: ${SITE_PACKAGES}
+	@echo - venv: ${VENV_DIR_REAL} "\n"
+	@echo - python executable: ${BIN_PYTHON} "\n"
+	@echo - pip executable: ${BIN_PIP} "\n"
+	@echo - document: ${DOC_URL} "\n"
+	@echo - site-packages: ${SITE_PACKAGES} "\n"
 
 
 #--- Virtualenv ---
@@ -193,7 +195,6 @@ ifeq (${USE_PYENV}, "Y")
 
 	-pyenv virtualenv ${VENV_NAME}
 else
-	echo
 	virtualenv -p ${GLOBAL_PYTHON} ${VENV_NAME}
 endif
 
