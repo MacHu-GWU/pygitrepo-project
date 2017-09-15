@@ -218,7 +218,7 @@ uninstall: ## Uninstall This Package
 	-${BIN_PIP} uninstall -y ${PACKAGE_NAME}
 
 
-.POHNY: install
+.PHONY: install
 install: uninstall ## Install This Package via setup.py
 	${BIN_PIP} install .
 
