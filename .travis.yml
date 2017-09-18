@@ -16,7 +16,7 @@ script:
   - pytest tests --cov=pygitrepo # Run unittest
 
 notifications:
-  email: false
+  email: false # Mute email notification
 
 after_success:
   - codecov # travis-ci will transfer data to codecov after success
