@@ -24,7 +24,7 @@ Documentation for ``{{ package_name }}``.
 
 
 Quick Links
------------
+------------------------------------------------------------------------------
 
 - .. image:: https://img.shields.io/badge/Link-Document-red.svg
       :target: http://{{ s3_bucket }}.s3.amazonaws.com/{{ package_name }}/index.html
@@ -48,16 +48,16 @@ Quick Links
 .. _install:
 
 Install
--------
+------------------------------------------------------------------------------
 
 ``{{ package_name }}`` is released on PyPI, so all you need is:
 
 .. code-block:: console
 
-	$ pip install {{ package_name }}
+    $ pip install {{ package_name }}
 
 To upgrade to latest version:
 
 .. code-block:: console
 
-	$ pip install --upgrade {{ package_name }}
+    $ pip install --upgrade {{ package_name }}

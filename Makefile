@@ -180,8 +180,8 @@ setup_pyenv: brew_install_pyenv ## Do some pre-setup for pyenv and pyenv-virtual
 init_venv: ## Initiate Virtual Environment
 ifeq (${USE_PYENV}, "Y")
 	# Install pyenv
-	brew install pyenv
-	brew install pyenv-virtualenv
+	-brew install pyenv
+	-brew install pyenv-virtualenv
 
 	# Initiate Config File
 	-rm ~/.bash_profile

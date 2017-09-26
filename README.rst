@@ -39,7 +39,7 @@ Welcome to ``pygitrepo`` Documentation
 
 
 Quick Links
------------
+------------------------------------------------------------------------------
 
 - .. image:: https://img.shields.io/badge/Link-Document-red.svg
       :target: http://www.wbh-doc.com.s3.amazonaws.com/pygitrepo/index.html
@@ -61,7 +61,7 @@ Quick Links
 
 
 Usage
------
+------------------------------------------------------------------------------
 1. Install: ``pip install pygitrepo``.
 2. Run command line tool: ``pygitrepo-init``.
 3. A ``<repo-name>`` directory will be created, you can use this as your github repo directory.
@@ -146,16 +146,16 @@ CI (Continues Integration) (Optional)
 .. _install:
 
 Install
--------
+------------------------------------------------------------------------------
 
 ``pygitrepo`` is released on PyPI, so all you need is:
 
 .. code-block:: console
 
-	$ pip install pygitrepo
+    $ pip install pygitrepo
 
 To upgrade to latest version:
 
 .. code-block:: console
 
-	$ pip install --upgrade pygitrepo
+    $ pip install --upgrade pygitrepo
