@@ -30,7 +30,7 @@ Quick Links
       :target: http://{{ s3_bucket }}.s3.amazonaws.com/{{ package_name }}/index.html
 
 - .. image:: https://img.shields.io/badge/Link-API_Reference_and_Source_Code-red.svg
-      :target: API reference and source code <http://{{ s3_bucket }}.s3.amazonaws.com/{{ package_name }}/py-modindex.html
+      :target: http://{{ s3_bucket }}.s3.amazonaws.com/{{ package_name }}/py-modindex.html
 
 - .. image:: https://img.shields.io/badge/Link-Install-red.svg
       :target: `install`_
