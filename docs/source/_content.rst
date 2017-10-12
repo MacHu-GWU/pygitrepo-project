@@ -65,6 +65,12 @@ Project File Structure
 
         |--- :ref:`requirements.txt`
 
+        |--- :ref:`requirements-dev.txt`
+
+        |--- :ref:`requirements-doc.txt`
+
+        |--- :ref:`requirements-test.txt`
+
         |--- :ref:`setup.py`
 
         |--- :ref:`tox.ini`

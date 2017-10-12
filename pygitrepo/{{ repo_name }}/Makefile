@@ -135,6 +135,8 @@ BIN_PIP="${BIN_DIR}/pip"
 BIN_PYTEST="${BIN_DIR}/pytest"
 BIN_SPHINX_START="${BIN_DIR}/sphinx-quickstart"
 BIN_TWINE="${BIN_DIR}/twine"
+BIN_TOX="${BIN_DIR}/tox"
+
 
 S3_PREFIX="s3://${BUCKET_NAME}/${PACKAGE_NAME}"
 DOC_URL="http://${BUCKET_NAME}.s3.amazonaws.com/${PACKAGE_NAME}/index.html"
@@ -160,8 +162,8 @@ info: ## Show information about python, pip in this environment
 #--- Virtualenv ---
 .PHONY: brew_install_pyenv
 brew_install_pyenv: ## Install pyenv and pyenv-virtualenv
-	brew install pyenv
-	brew install pyenv-virtualenv
+	-brew install pyenv
+	-brew install pyenv-virtualenv
 
 
 .PHONY: setup_pyenv
@@ -228,37 +230,44 @@ dev_install: uninstall ## Install This Package in Editable Mode
 	${BIN_PIP} install --editable .
 
 
+.PHONY: dev_dep
+dev_dep: ## Install Development Dependencies
+	${BIN_PIP} install -r requirements-dev.txt
+
+
+.PHONY: test_dep
+test_dep: ## Install Test Dependencies
+	${BIN_PIP} install -r requirements-test.txt
+
+
+.PHONY: doc_dep
+doc_dep: ## Install Doc Dependencies
+	${BIN_PIP} install -r requirements-doc.txt
+
+
 #--- Test ---
 .PHONY: test
-test: dev_install ## Run test
-	${BIN_PIP} install pytest
+test: dev_install test_dep ## Run test
 	${BIN_PYTEST} tests -s
 
 
 .PHONY: cov
-cov: dev_install ## Run Code Coverage test
-	${BIN_PIP} install pytest-cov
+cov: dev_install test_dep ## Run Code Coverage test
 	${BIN_PYTEST} tests -s --cov=${PACKAGE_NAME} --cov-report term --cov-report annotate:.coverage.annotate
 
 
 .PHONY: tox
-tox: ## Run tox
-	pip install tox
+tox: test_dep ## Run tox
+	${BIN_PIP} install tox
 	( \
 		pyenv local ${PY_VERSION} ${TEST_PY_VER2} ${TEST_PY_VER3} ${TEST_PY_VER4} ${TEST_PY_VER5}; \
-		tox; \
+		${BIN_TOX}; \
 	)
 
 
 #--- Sphinx Doc ---
-.PHONY: install_doc_deps
-install_doc_deps: ## Install Library for building Docs
-	${BIN_PIP} install sphinx==1.6.3
-	${BIN_PIP} install --upgrade docfly
-
-
 .PHONY: init_doc
-init_doc: install_doc_deps ## Initialize Sphinx Documentation Library
+init_doc: doc_dep ## Initialize Sphinx Documentation Library
 	{ \
 		cd docs; \
 		${BIN_SPHINX_START}; \
@@ -266,7 +275,7 @@ init_doc: install_doc_deps ## Initialize Sphinx Documentation Library
 
 
 .PHONY: build_doc
-build_doc: install_doc_deps dev_install ## Build Documents, force Update
+build_doc: doc_dep dev_install ## Build Documents, force Update
 	${BIN_PYTHON} ./docs/create_doctree.py
 	( \
 		source ${BIN_ACTIVATE}; \
@@ -291,7 +300,7 @@ view_doc: ## Open Documents
 
 
 .PHONY: deploy_doc
-deploy_doc: ##
+deploy_doc: ## Deploy Document to AWS S3
 	aws s3 rm ${S3_PREFIX} --recursive
 	aws s3 sync ./docs/build/html ${S3_PREFIX}
 
@@ -302,15 +311,12 @@ clean_doc: ## Clean Existing Documents
 
 
 .PHONY: reformat
-reformat: ## Pep8 Format Source Code
-	${BIN_PIP} install --upgrade pathlib_mate
-	${BIN_PIP} install autopep8
+reformat: dev_dep ## Pep8 Format Source Code
 	${BIN_PYTHON} fixcode.py
 
 
 .PHONY: publish
-publish: ## Publish This Library to PyPI
-	${BIN_PIP} install 'twine>=1.5.0'
+publish: dev_dep ## Publish This Library to PyPI
 	${BIN_PYTHON} setup.py sdist bdist_wheel
 	${BIN_TWINE} upload dist/*
 	-rm -rf build dist .egg ${PACKAGE_NAME}.egg-info

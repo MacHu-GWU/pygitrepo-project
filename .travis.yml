@@ -8,8 +8,7 @@ python:
 
 install:
   - pip install --editable . # Install it self
-  - pip install --upgrade pytest # Upgrade pytest to lastest
-  - pip install --upgrade pytest-cov # Upgrade pytest-cov to latest
+  - pip install -r requirements-test.txt # Install test dependencies
   - pip install codecov # Install coveralls
 
 script:
