@@ -3,8 +3,6 @@
 
 """
 This script can generate automate scripts for open source python project.
-
-Scroll to ``if __name__ == "__main__":`` for more info.
 """
 
 from __future__ import print_function
@@ -18,8 +16,10 @@ from pathlib_mate.pathlib import Path
 
 try:
     from .util import read, write
+    from . import integrate
 except:  # pragma: no cover
     from pygitrepo.util import read, write
+    from pygitrepo import integrate
 
 py_ver_major = sys.version_info.major
 py_ver_minor = sys.version_info.minor
@@ -78,13 +78,9 @@ def _initiate_project(package_name=None,
     :param github_username: github username, the github link will be:
       https://github.com//<github_username>/<repo_name>
 
-    :param supported_py_ver: list of py environment you want to support,
-      available test environment names can be found at
-      http://tox.readthedocs.io/en/latest/example/basic.html#a-simple-tox-ini-default-environments
-
-    :param supported_py_ver_for_travis: list of py environment you want to test
-      with https://travis-ci.org/. available test environment can be found at:
-      https://docs.travis-ci.com/user/languages/python/
+    :param supported_py_ver: list of Python version you want to support,
+      available Python Version names can be found at
+      https://github.com/pyenv/pyenv/blob/master/plugins/python-build/share/python-build.
 
     :param author_name: author name
     :param author_email: author email
@@ -106,27 +102,30 @@ def _initiate_project(package_name=None,
     if not github_username:  # pragma: no cover
         raise ValueError("`github_username` can't be None!")
 
-    if not supported_py_ver:
-        supported_py_ver = ["py27", "py34"]
+    if not supported_py_ver:  # pragma: no cover
+        supported_py_ver = [py_ver_long, ]
 
-    mapper = dict(
-        py="2.7",
-        py2="2.7",
-        py3="3.4",
-        py26="2.6",
-        py27="2.7",
-        py33="3.3",
-        py34="3.4",
-        py35="3.5",
-        py36="3.6",
-        py37="3.7",
-        pypy="pypy",
-        pypy3="pypy3",
-    )
-    supported_py_ver_for_travis = list(set([
-        mapper.get(py_ver, py_ver) for py_ver in supported_py_ver
-    ]))
-    supported_py_ver_for_travis.sort()
+    supported_py_ver_for_tox = set()
+    for py_ver in supported_py_ver:
+        try:
+            supported_py_ver_for_tox.add(
+                integrate.pyenv_ver_to_tox_ver(py_ver)
+            )
+        except Exception as e:  # pragma: no cover
+            print(e)
+    supported_py_ver_for_tox = list(supported_py_ver_for_tox)
+    supported_py_ver_for_tox.sort()
+
+    supported_py_ver_for_tarvis = set()
+    for py_ver in supported_py_ver:
+        try:
+            supported_py_ver_for_tarvis.add(
+                integrate.pyenv_ver_to_travis_ver(py_ver)
+            )
+        except Exception as e:  # pragma: no cover
+            print(e)
+    supported_py_ver_for_tarvis = list(supported_py_ver_for_tarvis)
+    supported_py_ver_for_tarvis.sort()
 
     if license != "MIT":  # pragma: no cover
         license = "MIT"
@@ -148,7 +147,8 @@ def _initiate_project(package_name=None,
         github_username=github_username,
 
         supported_py_ver=supported_py_ver,
-        supported_py_ver_for_travis=supported_py_ver_for_travis,
+        supported_py_ver_for_tox=supported_py_ver_for_tox,
+        supported_py_ver_for_travis=supported_py_ver_for_tarvis,
 
         py_ver_major=py_ver_major,
         py_ver_minor=py_ver_minor,
@@ -229,8 +229,10 @@ def _initiate_project(package_name=None,
               prompt="Your Github Username")
 @click.option("--supported_py_ver",
               prompt=("(optional) Enter python version list your package will support, "
-                      "seperate by comma. All available version are listed here: "
-                      "https://tox.readthedocs.io/en/latest/example/basic.html"),
+                      "seperate by comma. "
+                      "For example: '2.7.13, 3.4.6'. "
+                      "All available version are listed here: "
+                      "https://github.com/pyenv/pyenv/tree/master/plugins/python-build/share/python-build"),
               default="")
 @click.option("--author_name",
               prompt="Author Name",

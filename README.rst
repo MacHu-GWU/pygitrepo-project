@@ -24,7 +24,8 @@ Welcome to ``pygitrepo`` Documentation
 
 - ``make up``: single command to create/clean virtual environment.
 - ``make reformat``: command to Google stylize your code.
-- ``make install``: install your package (``setup.py`` file is out-of-the-box).
+- ``make install``: (For end user) install your package (``setup.py`` file is out-of-the-box).
+- ``make dev_install``: (For package developer) install your package in dev mode (``setup.py`` file is out-of-the-box).
 - ``make test``: unittest with `pytest <https://pypi.python.org/pypi/pytest>`_ (tests folder and scripts is out-of-the-box, just follow the pattern and create more).
 - ``make cov``: code coverage test with `coverage <https://pypi.python.org/pypi/coverage>`_, the default ``.coveragerc`` fit most of the case).
 - ``make tox``: multi python version test with tox, the default ``tox.ini`` fit most of the case.
@@ -66,6 +67,31 @@ Usage
 2. Run command line tool: ``pygitrepo-init``.
 3. A ``<repo-name>`` directory will be created, you can use this as your github repo directory.
 4. Take a look at ``Makefile``, all magic happens here!
+
+If you want to programmatically initialize your repository, you can do:
+
+.. code-block:: python
+
+    import pygitrepo
+
+    package_name = "pygitrepo"
+    github_username = "xxx"
+    supported_py_ver = ["2.7.13", "3.4.6", "3.5.3", "3.6.2"]
+    author_name = "xxx"
+    author_email = "example@email.com"
+    license="MIT"
+    s3_bucket = "doc-host"
+
+    if __name__ == "__main__":
+        pygitrepo.init(
+            package_name=package_name,
+            github_username=github_username,
+            supported_py_ver=supported_py_ver,
+            author_name=author_name,
+            author_email=author_email,
+            license=license,
+            s3_bucket=s3_bucket,
+        )
 
 
 Things Need to Install

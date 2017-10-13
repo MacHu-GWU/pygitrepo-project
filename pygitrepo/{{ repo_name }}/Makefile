@@ -22,12 +22,16 @@
 #         |--- create_doctree.py (a tools automatically build doc tree)
 #     |--- tests (unittest dir)
 #         |--- all.py (run all test from python)
+#         |--- ... (other test)
 #     |--- README.rst (readme file)
 #     |--- release-history.rst
 #     |--- setup.py (installation behavior definition)
-#     |--- requirements.txt
+#     |--- requirements.txt (dependencies)
+#     |--- requirements-dev.txt (dependencies for dev)
+#     |--- requirements-doc.txt (dependencies for doc)
+#     |--- requirements-test.txt (dependencies for test)
 #     |--- LICENSE.txt
-#     |--- MANIFEST.in
+#     |--- MANIFEST.in (specified files need to be included in source code archive)
 #     |--- tox.ini (tox setting)
 #     |--- .travis.yml (travis-ci setting)
 #     |--- .coveragerc (code coverage text setting)
@@ -59,10 +63,11 @@ PY_VER_MICRO="{{ py_ver_micro }}"
 
 #  Other Python Version You Want to Test With
 # (Only useful when you use tox locally)
-TEST_PY_VER2="3.4.6"
-TEST_PY_VER3="3.5.3"
-TEST_PY_VER4="3.6.2"
-TEST_PY_VER5=""
+{%- for py_ver in supported_py_ver %}
+{%- if loop.index0 >= 1 %}
+TEST_PY_VER{{ loop.index + 1 }}="{{ py_ver }}"
+{%- endif %}
+{%- endfor %}
 
 # Virtualenv Name
 VENV_NAME="${PACKAGE_NAME}_venv"
@@ -260,7 +265,7 @@ cov: dev_install test_dep ## Run Code Coverage test
 tox: test_dep ## Run tox
 	${BIN_PIP} install tox
 	( \
-		pyenv local ${PY_VERSION} ${TEST_PY_VER2} ${TEST_PY_VER3} ${TEST_PY_VER4} ${TEST_PY_VER5}; \
+		pyenv local {{ supported_py_ver|join(" ") }}; \
 		${BIN_TOX}; \
 	)
 

@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+1. Creates auto-generate doc for each module / class / method / variable.
+2. Creates Table of Content for sub chapter if you follow this
+`Style Guide <http://www.wbh-doc.com.s3.amazonaws.com/docfly/02-sphinx-doc-style-guide/index.html>`_
+"""
+
 import docfly
 from pathlib_mate import Path
 import {{package_name}} as package

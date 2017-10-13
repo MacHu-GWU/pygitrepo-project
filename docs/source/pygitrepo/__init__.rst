@@ -11,5 +11,6 @@ sub packages and modules
    :maxdepth: 1
 
     cli <cli>
+    integrate <integrate>
     util <util>
     
