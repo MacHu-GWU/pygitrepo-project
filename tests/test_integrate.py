@@ -26,7 +26,6 @@ def test_pyenv_ver_to_tox_ver():
 
     assert pyenv_ver_to_tox_ver("jython-dev") == "jython"
     assert pyenv_ver_to_tox_ver("jython-2.7.0") == "jython"
-    assert pyenv_ver_to_tox_ver("jython-2.7.1b3") == "jython"
 
     with raises(Exception):
         pyenv_ver_to_tox_ver("Something")
@@ -49,7 +48,6 @@ def test_pyenv_ver_to_travis_ver():
     assert pyenv_ver_to_travis_ver("3.5.3") == "3.5"
     assert pyenv_ver_to_travis_ver("3.6.2") == "3.6"
     assert pyenv_ver_to_travis_ver("3.6-dev") == "3.6-dev"
-    assert pyenv_ver_to_travis_ver("3.7.0a1") == "3.7"
     assert pyenv_ver_to_travis_ver("3.7-dev") == "3.7-dev"
 
     assert pyenv_ver_to_travis_ver("anaconda-4.0.0") == "2.7"
