@@ -159,7 +159,7 @@ help: ## ** Show this help message
 .PHONY: info
 info: ## ** Show information about python, pip in this environment
 	@echo - venv: ${VENV_DIR_REAL} "\n"
-	@echo - python exe®cutable: ${BIN_PYTHON} "\n"
+	@echo - python executable: ${BIN_PYTHON} "\n"
 	@echo - pip executable: ${BIN_PIP} "\n"
 	@echo - document: ${DOC_URL} "\n"
 	@echo - site-packages: ${SITE_PACKAGES} "\n"
