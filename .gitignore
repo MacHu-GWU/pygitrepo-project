@@ -3,7 +3,7 @@ pygitrepo_venv/
 pygitrepo.egg-info/
 pygitrepo-*/
 *-project/
-index.rst
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
