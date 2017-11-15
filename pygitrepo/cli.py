@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
-
 """
 This script can generate automate scripts for open source python project.
 """
 
-from __future__ import print_function
+from __future__ import print_function, unicode_literals
 import sys
 import datetime
 from os import walk, mkdir, getcwd
