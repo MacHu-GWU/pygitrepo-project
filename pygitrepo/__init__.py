@@ -2,8 +2,11 @@
 # -*- coding: utf-8 -*-
 
 
-__version__ = "0.0.10"
-__short_description__ = "Quickly initiate a python project from scratch."
+__version__ = "0.0.11"
+__short_description__ = (
+    "Allow dummies develop Python project like a Pro - "
+    "Quickly initiate a python project from scratch."
+)
 __license__ = "MIT"
 __author__ = "Sanhe Hu"
 __author_email__ = "husanhe@gmail.com"

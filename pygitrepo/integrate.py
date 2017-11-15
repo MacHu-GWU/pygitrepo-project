@@ -2,7 +2,16 @@
 # -*- coding: utf-8 -*-
 
 """
-Integrate pyenv, tox
+Integrate pyenv, tox, travis-ci.
+
+pyenv is a great software to management multiple Python version and switch
+between them.
+
+It assumes you are developing your library on one version, and test over few
+other version.
+
+This module helps to convert pyenv specified version into tox, travis-ci
+compatible version.
 """
 
 import re
@@ -15,6 +24,9 @@ python_build_url = "https://github.com/pyenv/pyenv/tree/master/plugins/python-bu
 
 
 def _get_pyenv_versions_from_github():
+    """
+    Get all available pyenv version.
+    """
     html = requests.get(python_build_url).text
     try:
         soup = bs4.BeautifulSoup(html, "html.parser")
@@ -106,7 +118,7 @@ def pyenv_ver_to_tox_ver(pyenv_ver):
             return "py35"
         if py_ver.startswith("3.6"):
             return "py36"
-        if py_ver.startswith("3.7"):
+        if py_ver.startswith("3.7"): # pragma: no cover
             return "py37"
 
         # for future version
@@ -180,7 +192,7 @@ def pyenv_ver_to_travis_ver(pyenv_ver):
             return "3.5"
         if py_ver.startswith("3.6"):
             return "3.6"
-        if py_ver.startswith("3.7"):
+        if py_ver.startswith("3.7"): # pragma: no cover
             return "3.7"
 
         return py_ver

@@ -90,8 +90,10 @@ if __name__ == "__main__":
 
     # Project Url
     URL = "https://github.com/{0}/{1}".format(GITHUB_USERNAME, repository_name)
+
     # Use todays date as GitHub release tag
     github_release_tag = str(date.today())
+
     # Source code download url
     DOWNLOAD_URL = "https://github.com/{0}/{1}/tarball/{2}".format(
         GITHUB_USERNAME, repository_name, github_release_tag)
@@ -122,6 +124,9 @@ if __name__ == "__main__":
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
     ]
+    """
+    Full list can be found at: https://pypi.python.org/pypi?%3Aaction=list_classifiers
+    """
 
     # Read requirements.txt, ignore comments
     try:

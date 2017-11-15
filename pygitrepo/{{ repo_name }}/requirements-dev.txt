@@ -1,3 +1,2 @@
 pathlib_mate
-autopep8
 twine>=1.5.0

@@ -14,7 +14,7 @@
     :target: https://pypi.python.org/pypi/{{ package_name }}
 
 .. image:: https://img.shields.io/badge/Star_Me_on_GitHub!--None.svg?style=social
-    :target: https://github.com/{{ github_username }}/{{ repo_name }}
+    :target: {{ repo_url }}
 
 
 Welcome to ``{{ package_name }}`` Documentation
@@ -25,21 +25,23 @@ Documentation for ``{{ package_name }}``.
 
 Quick Links
 ------------------------------------------------------------------------------
-
+{%- if doc_domain %}
 - .. image:: https://img.shields.io/badge/Link-Document-red.svg
-      :target: http://{{ s3_bucket }}.s3.amazonaws.com/{{ package_name }}/index.html
+      :target: {{ doc_domain }}/index.html
+{% endif %}
 
+{%- if doc_domain %}
 - .. image:: https://img.shields.io/badge/Link-API_Reference_and_Source_Code-red.svg
-      :target: http://{{ s3_bucket }}.s3.amazonaws.com/{{ package_name }}/py-modindex.html
-
+      :target: {{ doc_domain }}/py-modindex.html
+{% endif %}
 - .. image:: https://img.shields.io/badge/Link-Install-red.svg
       :target: `install`_
 
 - .. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
-      :target: https://github.com/{{ github_username }}/{{ repo_name }}
+      :target: {{ repo_url }}
 
 - .. image:: https://img.shields.io/badge/Link-Submit_Issue_and_Feature_Request-blue.svg
-      :target: https://github.com/{{ github_username }}/{{ repo_name }}/issues
+      :target: {{ repo_url }}/issues
 
 - .. image:: https://img.shields.io/badge/Link-Download-blue.svg
       :target: https://pypi.python.org/pypi/{{ package_name }}#downloads

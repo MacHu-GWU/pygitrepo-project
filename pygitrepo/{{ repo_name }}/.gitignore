@@ -2,7 +2,7 @@
 {{ package_name }}_venv/
 {{ package_name }}.egg-info/
 {{ package_name }}-*/
-index.rst
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
