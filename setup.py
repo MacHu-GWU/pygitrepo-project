@@ -95,8 +95,8 @@ if __name__ == "__main__":
     github_release_tag = str(date.today())
 
     # Source code download url
-    DOWNLOAD_URL = "https://github.com/{0}/{1}/tarball/{2}".format(
-        GITHUB_USERNAME, repository_name, github_release_tag)
+    DOWNLOAD_URL = "https://pypi.python.org/pypi/{0}/{1}#downloads".format(
+        PKG_NAME, VERSION)
 
     try:
         LICENSE = package.__license__
