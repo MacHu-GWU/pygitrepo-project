@@ -23,7 +23,7 @@ Welcome to ``pygitrepo`` Documentation
 ``pygitrepo`` can quickly initiate a python project from scratch, and you get these development tools ready to use and configured:
 
 - virtual environment management, **up, clean, switch**.
-- continues integration for **unit test and code coverage** on your **local machine** and **also cloud**.
+- continues integration for **unit test and code coverage on your local machine and also cloud**.
 - document site management, **write, build, view and deploy**.
 - **publish your package to PyPI**, make it installable everywhere.
 
@@ -54,7 +54,6 @@ Features
 ------------------------------------------------------------------------------
 If you initiate your project with ``pygitrepo``, you are with these **powerful tools** out-of-the-box:
 
-
 - ``make up``: single command to create / clean virtual environment.
 - ``make reformat``: command to Google stylize your code.
 - ``make install``: (For end user) install your package (``setup.py`` file is out-of-the-box).
@@ -67,7 +66,6 @@ If you initiate your project with ``pygitrepo``, you are with these **powerful t
 - ``make build_doc / view_doc``: easy sphinx document writing, no need to run ``sphinx-quickstart``, and write ``conf.py`` file.
 - ``make deploy_doc``: deploy document to `AWS S3 <http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html>`_.
 - ``make publish``: publish your project to `PyPI <https://pypi.python.org/pypi>`_
-
 
 ``pygitrepo`` is compatible with Windows / MacOS / Linux, which means you can enjoy same patterns / commands you use in development everywhere without and file changes.
 
@@ -100,7 +98,6 @@ If you want to programmatically initialize your repository, you can do:
     s3_bucket = "doc-host"
     doc_service = "s3" # "none", "rtd", "s3"
 
-
     if __name__ == "__main__":
         pygitrepo.init(
             package_name=package_name,
@@ -113,7 +110,7 @@ If you want to programmatically initialize your repository, you can do:
             doc_service=doc_service,
         )
 
-All available options and its definition can be found `Here <https://pygitrepo.readthedocs.io/pygitrepo/cli.html#pygitrepo.cli.initiate_project>`_ or `Here <http://www.wbh-doc.com.s3.amazonaws.com/pygitrepo/cli.html#pygitrepo.cli.initiate_project>`_.
+All available options and its definition can be found `HERE <https://pygitrepo.readthedocs.io/pygitrepo/cli.html#pygitrepo.cli.initiate_project>`_ or `THERE <http://www.wbh-doc.com.s3.amazonaws.com/pygitrepo/cli.html#pygitrepo.cli.initiate_project>`_.
 
 
 .. _install:

@@ -5,7 +5,7 @@
 This script can generate automate scripts for open source python project.
 """
 
-from __future__ import print_function, unicode_literals
+from __future__ import print_function
 import sys
 import datetime
 from os import walk, mkdir, getcwd
