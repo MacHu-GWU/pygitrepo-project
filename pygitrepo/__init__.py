@@ -16,6 +16,6 @@ __github_username__ = "MacHu-GWU"
 
 
 try:
-    from .cli import _initiate_project as init
+    from .cli import initiate_project as init
 except ImportError:  # pragma: no cover
     pass
