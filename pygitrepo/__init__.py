@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-__version__ = "0.0.12"
+__version__ = "0.0.13"
 __short_description__ = (
     "Allow dummies develop Python project like a Pro - "
     "Quickly initiate a python project from scratch."
