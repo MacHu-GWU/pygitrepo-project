@@ -55,7 +55,7 @@ Features
 If you initiate your project with ``pygitrepo``, you are with these **powerful tools** out-of-the-box:
 
 
-- ``make up``: single command to create / clean virtual environment. usually you do::
+- ``make up``: single command to create / clean virtual environment.
 - ``make reformat``: command to Google stylize your code.
 - ``make install``: (For end user) install your package (``setup.py`` file is out-of-the-box).
 - ``make dev_install``: (For package developer) install your package in dev mode (``setup.py`` file is out-of-the-box).
@@ -69,8 +69,7 @@ If you initiate your project with ``pygitrepo``, you are with these **powerful t
 - ``make publish``: publish your project to `PyPI <https://pypi.python.org/pypi>`_
 
 
-``pygitrepo`` is compatible with Windows / MacOS / Linux, which means you can enjoy same patterns /
-commands you use in development everywhere without and file changes.
+``pygitrepo`` is compatible with Windows / MacOS / Linux, which means you can enjoy same patterns / commands you use in development everywhere without and file changes.
 
 
 Usage
