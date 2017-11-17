@@ -220,7 +220,7 @@ ifeq (${USE_PYENV}, "Y")
 	pyenv install ${PY_VERSION} -s
 	pyenv rehash
 
-	-pyenv virtualenv ${VENV_NAME}
+	-pyenv virtualenv ${PY_VERSION} ${VENV_NAME}
 else
 	virtualenv -p ${GLOBAL_PYTHON} ${VENV_NAME}
 endif
