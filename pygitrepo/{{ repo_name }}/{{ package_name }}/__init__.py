@@ -11,13 +11,13 @@ __license__ = "{{ license }}"
 {% if author_name -%}
 __author__ = "{{ author_name }}"
 {% endif -%}
-{% if __author_email__ -%}
+{% if author_email -%}
 __author_email__ = "{{ author_email }}"
 {% endif -%}
-{% if __maintainer__ -%}
+{% if maintainer_name -%}
 __maintainer__ = "{{ maintainer_name }}"
 {% endif -%}
-{% if __maintainer_email__ -%}
+{% if maintainer_email -%}
 __maintainer_email__ = "{{ maintainer_email }}"
 {% endif -%}
 __github_username__ = "{{ github_username }}"
