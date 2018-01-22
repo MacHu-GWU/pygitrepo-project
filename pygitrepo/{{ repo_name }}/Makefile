@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Auto generated from pygitrepo {{ pygitrepo_version }}
 #
 # This Makefile is a dev-ops tool set.
 # Compatible with:

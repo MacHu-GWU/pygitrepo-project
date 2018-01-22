@@ -2,8 +2,17 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from pytest import raises, approx
-from pygitrepo.integrate import pyenv_ver_to_tox_ver, pyenv_ver_to_travis_ver
+from pytest import raises
+from pygitrepo.integrate import (
+    _get_pyenv_versions_from_github,
+    pyenv_ver_to_tox_ver, pyenv_ver_to_travis_ver,
+)
+
+
+def test_get_pyenv_versions_from_github():
+    versions = _get_pyenv_versions_from_github()
+    assert "2.7.13" in versions
+    assert "3.4.6" in versions
 
 
 def test_pyenv_ver_to_tox_ver():

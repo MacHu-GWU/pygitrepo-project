@@ -15,11 +15,14 @@ from jinja2 import Template
 from pathlib_mate.pathlib import Path
 
 try:
-    from .util import read, write
     from . import integrate
+    from .util import read, write
+    from .version import __version__
 except:  # pragma: no cover
-    from pygitrepo.util import read, write
     from pygitrepo import integrate
+    from pygitrepo.util import read, write
+    from pygitrepo.version import __version__
+
 
 py_ver_major = sys.version_info.major
 py_ver_minor = sys.version_info.minor
@@ -212,6 +215,7 @@ def initiate_project(package_name=None,
         maintainer_email = author_email
 
     kwargs_ = dict(
+        pygitrepo_version=__version__,
         package_name=package_name,
         repo_name=repo_name,
         github_username=github_username,
