@@ -143,6 +143,7 @@ BIN_PYTEST="${BIN_DIR}/pytest"
 BIN_SPHINX_START="${BIN_DIR}/sphinx-quickstart"
 BIN_TWINE="${BIN_DIR}/twine"
 BIN_TOX="${BIN_DIR}/tox"
+BIN_JUPYTER="${BIN_DIR}/jupyter"
 
 
 S3_PREFIX="s3://${BUCKET_NAME}/${PACKAGE_NAME}"
@@ -272,8 +273,14 @@ doc_dep: ## Install Doc Dependencies
 
 
 #--- Test ---
+
 .PHONY: test
 test: dev_install test_dep ## ** Run test
+	${BIN_PYTEST} tests -s
+
+
+.PHONY: test_only
+test_only: ## Run test without checking dependencies
 	${BIN_PYTEST} tests -s
 
 
@@ -282,8 +289,13 @@ cov: dev_install test_dep ## ** Run Code Coverage test
 	${BIN_PYTEST} tests -s --cov=${PACKAGE_NAME} --cov-report term --cov-report annotate:.coverage.annotate
 
 
+.PHONY: cov_only
+cov_only: ## Run Code Coverage test without checking dependencies
+	${BIN_PYTEST} tests -s --cov=${PACKAGE_NAME} --cov-report term --cov-report annotate:.coverage.annotate
+
+
 .PHONY: tox
-tox: test_dep ## ** Run tox
+tox: ## ** Run tox
 	${BIN_PIP} install tox
 	( \
 		pyenv local {{ supported_py_ver|join(" ") }}; \
@@ -311,7 +323,7 @@ build_doc: doc_dep dev_install ## ** Build Documents, force Update
 
 
 .PHONY: build_doc_again
-build_doc_again: dev_install ## Build Documents, Don't Check Dependencies
+build_doc_again: ## Build Documents, Don't Check Dependencies
 	${BIN_PYTHON} ./docs/create_doctree.py
 	( \
 		source ${BIN_ACTIVATE}; \
@@ -346,3 +358,9 @@ publish: dev_dep ## ** Publish This Library to PyPI
 	${BIN_PYTHON} setup.py sdist bdist_wheel
 	${BIN_TWINE} upload dist/*
 	-rm -rf build dist .egg ${PACKAGE_NAME}.egg-info
+
+
+.PHONY: notebook
+notebook: ## ** Run jupyter notebook
+	${BIN_PIP} install jupyter
+	${BIN_JUPYTER} notebook

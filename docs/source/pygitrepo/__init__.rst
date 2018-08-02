@@ -10,7 +10,8 @@ sub packages and modules
 .. toctree::
    :maxdepth: 1
 
-    cli <cli>
-    integrate <integrate>
+    version <version>
     util <util>
+    integrate <integrate>
+    cli <cli>
     
