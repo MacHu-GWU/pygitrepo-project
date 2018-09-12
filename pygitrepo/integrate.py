@@ -118,7 +118,7 @@ def pyenv_ver_to_tox_ver(pyenv_ver):
             return "py35"
         if py_ver.startswith("3.6"):
             return "py36"
-        if py_ver.startswith("3.7"): # pragma: no cover
+        if py_ver.startswith("3.7"):  # pragma: no cover
             return "py37"
 
         # for future version
@@ -192,7 +192,7 @@ def pyenv_ver_to_travis_ver(pyenv_ver):
             return "3.5"
         if py_ver.startswith("3.6"):
             return "3.6"
-        if py_ver.startswith("3.7"): # pragma: no cover
+        if py_ver.startswith("3.7"):  # pragma: no cover
             return "3.7"
 
         return py_ver

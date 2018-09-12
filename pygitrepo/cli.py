@@ -73,7 +73,9 @@ def is_none_or_empty(value):
     else:
         return False
 
+
 SUPPORT_DOC_HOST_SERVICE = ["none", "rtd", "s3"]
+
 
 def initiate_project(package_name=None,
                      repo_name=None,
@@ -85,7 +87,7 @@ def initiate_project(package_name=None,
                      maintainer_email=None,
                      license="MIT",
                      rtd_name=None,
-                     s3_bucket=None,
+                     doc_host_bucket_name=None,
                      doc_service="none",
                      verbose=True,
                      **kwargs):
@@ -177,34 +179,35 @@ def initiate_project(package_name=None,
     if is_none_or_empty(rtd_name) is False:  # pragma: no cover
         doc_domain_rtd = "https://{rtd_name}.readthedocs.io" \
             .format(rtd_name=rtd_name)
-    else: # pragma: no cover
+    else:  # pragma: no cover
         rtd_name = "Unknown_ReadTheDocs_Project_Name"
 
-    if is_none_or_empty(s3_bucket) is False:  # pragma: no cover
+    if is_none_or_empty(doc_host_bucket_name) is False:  # pragma: no cover
         doc_domain_s3 = "http://{s3_bucket}.s3.amazonaws.com/{package_name}" \
-            .format(s3_bucket=s3_bucket, package_name=package_name)
-    else: # pragma: no cover
+            .format(s3_bucket=doc_host_bucket_name, package_name=package_name)
+    else:  # pragma: no cover
         s3_bucket = "Unknwon_S3_Bucket_Name"
 
     doc_domain = None
-    if doc_service == "none": # pragma: no cover
+    if doc_service == "none":  # pragma: no cover
         click.secho(
             ("You don't have a website to host your documents! "
              "You could use either https://readthedocs.org or AWS S3."),
             fg="green"
         )
-    elif doc_service == "rtd": # pragma: no cover
+    elif doc_service == "rtd":  # pragma: no cover
         doc_domain = doc_domain_rtd
-    elif doc_service == "s3": # pragma: no cover
+    elif doc_service == "s3":  # pragma: no cover
         doc_domain = doc_domain_s3
-    else: # pragma: no cover
-        raise ValueError("doesn't recognize doc host service '%s'!" % doc_service)
+    else:  # pragma: no cover
+        raise ValueError(
+            "doesn't recognize doc host service '%s'!" % doc_service)
 
     click.secho(
         (
-        "There's author introduction file at {repo_name}/docs/source/author.rst, "
-        "you should change it to your own introduction.") \
-            .format(repo_name=repo_name),
+            "There's author introduction file at {repo_name}/docs/source/author.rst, "
+            "you should change it to your own introduction.")
+        .format(repo_name=repo_name),
         fg="red",
     )
 
@@ -239,8 +242,9 @@ def initiate_project(package_name=None,
         maintainer_name=maintainer_name,
         maintainer_email=maintainer_email,
 
+        doc_service=doc_service,
         rtd_name=rtd_name,
-        s3_bucket=s3_bucket,
+        doc_host_bucket_name=doc_host_bucket_name,
         doc_domain=doc_domain,
     )
     kwargs_.update(kwargs)
@@ -348,17 +352,17 @@ def initiate_project(package_name=None,
 @click.option(
     "--rtd_name",
     prompt=(
-          "(optional) If use ReadTheDocs to host your document, "
-          "please specify the project name "
-          "(will be your domain prefix)."
+        "(optional) If use ReadTheDocs to host your document, "
+        "please specify the project name "
+        "(will be your domain prefix)."
     ),
     default="",
 )
 @click.option(
-    "--s3_bucket",
+    "--doc_host_bucket_name",
     prompt=(
-          "(optional) If use AWS S3 to host your document, "
-          "please specify the bucket name."
+        "(optional) If use AWS S3 to host your document, "
+        "please specify the bucket name."
     ),
     default="",
 )
@@ -377,7 +381,7 @@ def _initiate_project(package_name,
                       maintainer_name,
                       maintainer_email,
                       rtd_name,
-                      s3_bucket,
+                      doc_host_bucket_name,
                       doc_service):
     if supported_py_ver is None:
         pass
@@ -399,7 +403,7 @@ def _initiate_project(package_name,
         maintainer_name=maintainer_name,
         maintainer_email=maintainer_email,
         rtd_name=rtd_name,
-        s3_bucket=s3_bucket,
+        doc_host_bucket_name=doc_host_bucket_name,
         doc_service=doc_service,
     )
 

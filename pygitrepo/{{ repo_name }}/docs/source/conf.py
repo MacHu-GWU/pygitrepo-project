@@ -186,3 +186,10 @@ texinfo_documents = [
 intersphinx_mapping = {'https://docs.python.org/': None}
 
 autodoc_member_order = 'bysource'
+
+# Enable custom css
+rst_prolog = '\n.. include:: .custom-style.rst\n'
+
+
+def setup(app):
+    app.add_stylesheet('css/custom-style.css')

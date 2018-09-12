@@ -1,3 +1,8 @@
+{%- if doc_service == "rtd" %}
+.. image:: https://readthedocs.org/projects/{{ rtd_name }}/badge/?version=latest
+    :target: https://{{ rtd_name }}.readthedocs.io/?badge=latest
+    :alt: Documentation Status
+{% endif %}
 .. image:: https://travis-ci.org/{{ github_username }}/{{ repo_name }}.svg?branch=master
     :target: https://travis-ci.org/{{ github_username }}/{{ repo_name }}?branch=master
 
@@ -13,38 +18,45 @@
 .. image:: https://img.shields.io/pypi/pyversions/{{ package_name }}.svg
     :target: https://pypi.python.org/pypi/{{ package_name }}
 
-.. image:: https://img.shields.io/badge/Star_Me_on_GitHub!--None.svg?style=social
+.. image:: https://img.shields.io/badge/STAR_Me_on_GitHub!--None.svg?style=social
     :target: {{ repo_url }}
+
+------
+
+{% if doc_domain %}
+.. image:: https://img.shields.io/badge/Link-Document-blue.svg
+      :target: {{ doc_domain }}/index.html
+{% endif %}
+
+{%- if doc_domain %}
+.. image:: https://img.shields.io/badge/Link-API-blue.svg
+      :target: {{ doc_domain }}/py-modindex.html
+{% endif %}
+
+{%- if doc_domain %}
+.. image:: https://img.shields.io/badge/Link-Source_Code-blue.svg
+      :target: {{ doc_domain }}/py-modindex.html
+{% endif %}
+.. image:: https://img.shields.io/badge/Link-Install-blue.svg
+      :target: `install`_
+
+.. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
+      :target: {{ repo_url }}
+
+.. image:: https://img.shields.io/badge/Link-Submit_Issue-blue.svg
+      :target: {{ repo_url }}/issues
+
+.. image:: https://img.shields.io/badge/Link-Request_Feature-blue.svg
+      :target: {{ repo_url }}/issues
+
+.. image:: https://img.shields.io/badge/Link-Download-blue.svg
+      :target: https://pypi.org/pypi/{{ package_name }}#files
 
 
 Welcome to ``{{ package_name }}`` Documentation
 ==============================================================================
 
 Documentation for ``{{ package_name }}``.
-
-
-Quick Links
-------------------------------------------------------------------------------
-{%- if doc_domain %}
-- .. image:: https://img.shields.io/badge/Link-Document-red.svg
-      :target: {{ doc_domain }}/index.html
-{% endif %}
-
-{%- if doc_domain %}
-- .. image:: https://img.shields.io/badge/Link-API_Reference_and_Source_Code-red.svg
-      :target: {{ doc_domain }}/py-modindex.html
-{% endif %}
-- .. image:: https://img.shields.io/badge/Link-Install-red.svg
-      :target: `install`_
-
-- .. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
-      :target: {{ repo_url }}
-
-- .. image:: https://img.shields.io/badge/Link-Submit_Issue_and_Feature_Request-blue.svg
-      :target: {{ repo_url }}/issues
-
-- .. image:: https://img.shields.io/badge/Link-Download-blue.svg
-      :target: https://pypi.python.org/pypi/{{ package_name }}#downloads
 
 
 .. _install:

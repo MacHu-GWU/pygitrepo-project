@@ -86,11 +86,15 @@ CI (Continues Integration) (Optional)
 
 Project File Structure
 ------------------------------------------------------------------------------
-A mature python project should include these,
+A :green:`mature` python project should include these,
 
 `File Structure Example <https://github.com/MacHu-GWU/pygitrepo-project>`_:
 
     |--- :ref:`repo_name`
+
+        |--- :ref:`makes`
+
+            |--- :ref:`python_env.mk`
 
         |--- :ref:`docs`
 

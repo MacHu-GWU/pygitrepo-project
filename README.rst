@@ -1,3 +1,8 @@
+
+.. image:: https://readthedocs.org/projects/pygitrepo/badge/?version=latest
+    :target: https://pygitrepo.readthedocs.io/?badge=latest
+    :alt: Documentation Status
+
 .. image:: https://travis-ci.org/MacHu-GWU/pygitrepo-project.svg?branch=master
     :target: https://travis-ci.org/MacHu-GWU/pygitrepo-project?branch=master
 
@@ -13,12 +18,41 @@
 .. image:: https://img.shields.io/pypi/pyversions/pygitrepo.svg
     :target: https://pypi.python.org/pypi/pygitrepo
 
-.. image:: https://img.shields.io/badge/Star_Me_on_GitHub!--None.svg?style=social
+.. image:: https://img.shields.io/badge/STAR_Me_on_GitHub!--None.svg?style=social
     :target: https://github.com/MacHu-GWU/pygitrepo-project
+
+------
+
+
+.. image:: https://img.shields.io/badge/Link-Document-blue.svg
+      :target: https://pygitrepo.readthedocs.io/index.html
+
+.. image:: https://img.shields.io/badge/Link-API-blue.svg
+      :target: https://pygitrepo.readthedocs.io/py-modindex.html
+
+.. image:: https://img.shields.io/badge/Link-Source_Code-blue.svg
+      :target: https://pygitrepo.readthedocs.io/py-modindex.html
+
+.. image:: https://img.shields.io/badge/Link-Install-blue.svg
+      :target: `install`_
+
+.. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
+      :target: https://github.com/MacHu-GWU/pygitrepo-project
+
+.. image:: https://img.shields.io/badge/Link-Submit_Issue-blue.svg
+      :target: https://github.com/MacHu-GWU/pygitrepo-project/issues
+
+.. image:: https://img.shields.io/badge/Link-Request_Feature-blue.svg
+      :target: https://github.com/MacHu-GWU/pygitrepo-project/issues
+
+.. image:: https://img.shields.io/badge/Link-Download-blue.svg
+      :target: https://pypi.org/pypi/pygitrepo#files
 
 
 Welcome to ``pygitrepo`` Documentation
 ==============================================================================
+
+``pygitrepo`` is a tool that can initiate a `battery-included` python project from scratch. What you need is just
 
 ``pygitrepo`` can quickly initiate a python project from scratch, and you get these development tools ready to use and configured:
 
@@ -26,28 +60,6 @@ Welcome to ``pygitrepo`` Documentation
 - continues integration for **unit test and code coverage on your local machine and also cloud**.
 - document site management, **write, build, view and deploy**.
 - **publish your package to PyPI**, make it installable everywhere.
-
-
-Quick Links
-------------------------------------------------------------------------------
-
-- .. image:: https://img.shields.io/badge/Link-Document-red.svg
-      :target: https://pygitrepo.readthedocs.io/index.html
-
-- .. image:: https://img.shields.io/badge/Link-API_Reference_and_Source_Code-red.svg
-      :target: https://pygitrepo.readthedocs.io/py-modindex.html
-
-- .. image:: https://img.shields.io/badge/Link-Install-red.svg
-      :target: `install`_
-
-- .. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
-      :target: https://github.com/MacHu-GWU/pygitrepo-project
-
-- .. image:: https://img.shields.io/badge/Link-Submit_Issue_and_Feature_Request-blue.svg
-      :target: https://github.com/MacHu-GWU/pygitrepo-project/issues
-
-- .. image:: https://img.shields.io/badge/Link-Download-blue.svg
-      :target: https://pypi.python.org/pypi/pygitrepo#downloads
 
 
 Features
@@ -95,7 +107,7 @@ If you want to programmatically initialize your repository, you can do:
     author_name = "Obama"
     author_email = "example@email.com"
     license="MIT"
-    s3_bucket = "doc-host"
+    doc_host_bucket_name = "doc-host"
     doc_service = "s3" # "none", "rtd", "s3"
 
     if __name__ == "__main__":
@@ -106,7 +118,7 @@ If you want to programmatically initialize your repository, you can do:
             author_name=author_name,
             author_email=author_email,
             license=license,
-            s3_bucket=s3_bucket,
+            doc_host_bucket_name=doc_host_bucket_name,
             doc_service=doc_service,
         )
 
