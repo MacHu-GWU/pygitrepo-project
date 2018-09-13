@@ -53,7 +53,9 @@ Welcome to ``pygitrepo`` Documentation
 
 ``pygitrepo`` is a tool that can initiate a professional-liked python project skeleton from scratch, **JUST NEED TO ENTER THE LIBRARY NAME!**
 
-**WITHOUT** ``pygitrepo``::
+**WITHOUT** ``pygitrepo``:
+
+.. code-block:: bash
 
     $ git init my_library # initiate your git repo
     $ vim .gitignore # edit .gitignore file
@@ -70,7 +72,9 @@ Welcome to ``pygitrepo`` Documentation
 
 Now you finally read to start **writing the real code**. However, it could be more complicate on Windows.
 
-After you finished your development, you want to test it before you publish::
+After you finished your development, you want to test it before you publish:
+
+.. code-block:: bash
 
     $ vim .travis.yml # configure your continues-integration, or use .circleci
     $ vim tox.ini # configure tox to test on Py2.7, 3.4, 3.5, ...
@@ -80,7 +84,9 @@ After you finished your development, you want to test it before you publish::
 
 I guess it would **take you at least AN HOUR to read the document for continues integration, code coverage test, and multiple python version test**... Do you know how many pitfalls are in these?
 
-**But if WITH** ``pygitrepo``::
+**But if WITH** ``pygitrepo``:
+
+.. code-block:: bash
 
     $ pip install pygitrepo
     $ pygitrepo-init # call the command line tool, and enter your project name
@@ -92,24 +98,32 @@ I guess it would **take you at least AN HOUR to read the document for continues 
 
 a new git repo directory ``my_library-project`` will be created. ``.gitignore``, ``setup.py``, ``requirements-dev/doc/test.txt``, ``.travis.yml``, ``.coveragerc``, ``docs/source/conf.py``, ``tests/some_test.py ...``, etc, ... All functions are ready to use, you don't need to edit anything!
 
-Create and Remove virtualenv::
+Create and Remove virtualenv:
+
+.. code-block:: bash
 
     $ make up # create
     $ make clean # remove
 
-Install your library and Run Test::
+Install your library and Run Test:
+
+.. code-block:: bash
 
     $ make test # unit test
     $ make cov # code coverage test
     $ make tox # multi python version test
 
-Build Document with auto-generated API reference::
+Build Document with auto-generated API reference:
+
+.. code-block:: bash
 
     $ make build_doc # build your document site
     $ make view_doc # open your doc in browser
     $ make deploy_doc # deploy your doc website to s3
 
-Want to publish to Python Package Index?, Let's do::
+Want to publish to Python Package Index?, Let's do:
+
+.. code-block:: bash
 
     $ make publish
 

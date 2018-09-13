@@ -21,9 +21,9 @@ def validate_not_empty_string(param, value):
         raise TypeError(msg)
 
 
-_package_name_charset = string.letters + string.digits + "_"
+_package_name_charset = string.ascii_letters + string.digits + "_"
 package_name_charset = set(_package_name_charset)
-_github_username_charset = string.letters + string.digits + "-"
+_github_username_charset = string.ascii_letters + string.digits + "-"
 github_username_charset = set(_github_username_charset)
 
 

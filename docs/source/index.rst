@@ -8,7 +8,7 @@ Table of Content
    :maxdepth: 1
 
     Chinese Tutorial (中文文档点这里) <01-Chinese-Doc/index.rst>
-    Tutorial <02-English-Doc/index.rst>
+    English Tutorial <02-English-Doc/index.rst>
     
 
 .. include:: author.rst

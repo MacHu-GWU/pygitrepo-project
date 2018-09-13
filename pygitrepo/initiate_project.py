@@ -53,13 +53,13 @@ def initiate_project(package_name=None,
 
     :param package_name: your python package name, it should be able to install
         via ``pip install <package_name>``, and will be published on
-        https://pypi.python.org/pypi/<package_name>
+        https://pypi.python.org/pypi/package_name
 
     :param repo_name: github repository name, the github link will be:
-        https://github.com//<github_username>/<repo_name>
+        https://github.com/github_username/repo_name
 
     :param github_username: github username, the github link will be:
-        https://github.com//<github_username>/<repo_name>
+        https://github.com/github_username/repo_name
 
     :param supported_py_ver: list of Python version you want to support,
         it has to be a valid pyenv version.
@@ -75,15 +75,14 @@ def initiate_project(package_name=None,
         the license file yourself.
 
     :param rtd_name: Read the doc project name, doc will be host at:
-        http://<rtd_name>.readthedocs.io/
+        https://rtd_name.readthedocs.io/
 
-    :param s3_bucket: AWS S3 bucket name, doc will be host at
-        http://<s3_bucket>.s3.amazonaws.com/<package_name>/index.html. You need to
+    :param doc_host_bucket_name: AWS S3 bucket name, doc will be host at
+        http://doc_host_bucket_name.s3.amazonaws.com/package_name/index.html. You need to
         config your bucket to allow all public get traffic. Tutorial is here:
         http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html
 
-    :param doc_service: str, doc service you want to use, one of
-        "none", "rtd", "s3".
+    :param doc_service: str, doc service you want to use, one of "rtd", "s3".
 
     :param verbose: bool, toggle on / off the log info.
     """

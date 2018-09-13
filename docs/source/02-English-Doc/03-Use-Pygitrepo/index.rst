@@ -40,7 +40,7 @@ If you want to programmatically initialize your repository, you can do:
     author_email = "example@email.com"
     license="MIT"
     doc_host_bucket_name = "doc-host"
-    doc_service = "s3" # "none", "rtd", "s3"
+    doc_service = pygitrepo.DocService.s3" # "none", "rtd", "s3"
 
     if __name__ == "__main__":
         pygitrepo.init(
@@ -54,6 +54,5 @@ If you want to programmatically initialize your repository, you can do:
             doc_service=doc_service,
         )
 
-All available options and its definition can be found `HERE <https://pygitrepo.readthedocs.io/pygitrepo/cli.html#pygitrepo.cli.initiate_project>`_ or `THERE <http://www.wbh-doc.com.s3.amazonaws.com/pygitrepo/cli.html#pygitrepo.cli.initiate_project>`_.
-
+All available options and its definition can be found :func:`Here <pygitrepo.initiate_project.initiate_project>`.
 
