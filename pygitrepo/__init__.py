@@ -4,7 +4,7 @@
 from .version import __version__
 
 __short_description__ = (
-    "Allow dummies develop Python project like a Pro - "
+    "Allow beginner to develop Python project like a Pro - "
     "Quickly initiate a python project from scratch."
 )
 __license__ = "MIT"
@@ -15,6 +15,7 @@ __maintainer_email__ = "husanhe@gmail.com"
 __github_username__ = "MacHu-GWU"
 
 try:
-    from .cli import initiate_project as init
+    from .initiate_project import initiate_project as init
+    from .validation import DocService
 except ImportError:  # pragma: no cover
     pass

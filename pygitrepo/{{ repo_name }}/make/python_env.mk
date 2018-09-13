@@ -88,7 +88,8 @@ DOC_HOST_BUCKET_NAME="{{ doc_host_bucket_name }}"
 VENV_NAME="${PACKAGE_NAME}_venv"
 
 # Project Root Directory
-PROJECT_ROOT_DIR=${shell git rev-parse --show-toplevel}
+GIT_ROOT_DIR=${shell git rev-parse --show-toplevel}
+PROJECT_ROOT_DIR=${shell pwd}
 
 ifeq (${OS}, Windows_NT)
     DETECTED_OS := Windows

@@ -2,8 +2,7 @@
 # for more info: https://coverage.readthedocs.io/en/coverage-4.4.1/config.html
 [run]
 omit =
-    pygitrepo/pkg/*
-    pygitrepo/zzz_ezinstall.py
+    pygitrepo/cli.py
 
 [report]
 # Regexes for lines to exclude from consideration

@@ -1,4 +1,3 @@
-
 .. image:: https://readthedocs.org/projects/pygitrepo/badge/?version=latest
     :target: https://pygitrepo.readthedocs.io/?badge=latest
     :alt: Documentation Status
@@ -52,77 +51,67 @@
 Welcome to ``pygitrepo`` Documentation
 ==============================================================================
 
-``pygitrepo`` is a tool that can initiate a `battery-included` python project from scratch. What you need is just
+``pygitrepo`` is a tool that can initiate a professional-liked python project skeleton from scratch, **JUST NEED TO ENTER THE LIBRARY NAME!**
 
-``pygitrepo`` can quickly initiate a python project from scratch, and you get these development tools ready to use and configured:
+**WITHOUT** ``pygitrepo``::
 
-- virtual environment management, **up, clean, switch**.
-- continues integration for **unit test and code coverage on your local machine and also cloud**.
-- document site management, **write, build, view and deploy**.
-- **publish your package to PyPI**, make it installable everywhere.
+    $ git init my_library # initiate your git repo
+    $ vim .gitignore # edit .gitignore file
 
+    $ virtualenv my_library_venv # create venv
+    $ source ./my_project_venv/bin/activate # activate venv
+    $ vim setup.py # edit setup.py file, DO YOU REALLY KNOW HOW TO WRITE setup.py FILE?
+    $ pip install . # install your library and dependencies
+    $ pip install pytest
+    $ mkdir tests # write some test
+    $ pip install sphinx
+    $ sphinx-quickstart # initiate doc
+    $ vim docs/source/conf.py # configure your doc settings
 
-Features
-------------------------------------------------------------------------------
-If you initiate your project with ``pygitrepo``, you are with these **powerful tools** out-of-the-box:
+Now you finally read to start **writing the real code**. However, it could be more complicate on Windows.
 
-- ``make up``: single command to create / clean virtual environment.
-- ``make reformat``: command to Google stylize your code.
-- ``make install``: (For end user) install your package (``setup.py`` file is out-of-the-box).
-- ``make dev_install``: (For package developer) install your package in dev mode (``setup.py`` file is out-of-the-box).
-- ``make test``: unittest with `pytest <https://pypi.python.org/pypi/pytest>`_ (tests folder and scripts is out-of-the-box, just follow the pattern and create more).
-- ``make cov``: code coverage test with `coverage <https://pypi.python.org/pypi/coverage>`_, the default ``.coveragerc`` fit most of the case).
-- ``make tox``: multi python version test with tox, the default ``tox.ini`` fit most of the case.
-- built-in integration with https://travis-ci.org/.
-- built-in integration with https://codecov.io/.
-- ``make build_doc / view_doc``: easy sphinx document writing, no need to run ``sphinx-quickstart``, and write ``conf.py`` file.
-- ``make deploy_doc``: deploy document to `AWS S3 <http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html>`_.
-- ``make publish``: publish your project to `PyPI <https://pypi.python.org/pypi>`_
+After you finished your development, you want to test it before you publish::
 
-``pygitrepo`` is compatible with Windows / MacOS / Linux, which means you can enjoy same patterns / commands you use in development everywhere without and file changes.
+    $ vim .travis.yml # configure your continues-integration, or use .circleci
+    $ vim tox.ini # configure tox to test on Py2.7, 3.4, 3.5, ...
+    $ vim .coveragerc # configure code coverage test
+    $ pip install tox
+    $ pip install coverage
 
+I guess it would **take you at least AN HOUR to read the document for continues integration, code coverage test, and multiple python version test**... Do you know how many pitfalls are in these?
 
-Usage
-------------------------------------------------------------------------------
+**But if WITH** ``pygitrepo``::
 
-**Command Line Tool**
+    $ pip install pygitrepo
+    $ pygitrepo-init # call the command line tool, and enter your project name
+    (REQUIRED) Your Package Name (e.g. pip): pygitrepo
+    (REQUIRED) Your Github Username: Machu-GWU
+    more optional prompt, you can use the default ...
 
-1. Install: ``$ pip install pygitrepo``.
-2. Run command line tool: ``$ pygitrepo-init``, entry your settings following the instruction.
-3. A ``<repo-name>`` directory will be created, you can use this as your github repo directory.
-4. Take a look at ``Makefile``, all magic happens here!
+**Done!**
 
+a new git repo directory ``my_library-project`` will be created. ``.gitignore``, ``setup.py``, ``requirements-dev/doc/test.txt``, ``.travis.yml``, ``.coveragerc``, ``docs/source/conf.py``, ``tests/some_test.py ...``, etc, ... All functions are ready to use, you don't need to edit anything!
 
-**Python Script Initializer**
+Create and Remove virtualenv::
 
-If you want to programmatically initialize your repository, you can do:
+    $ make up # create
+    $ make clean # remove
 
-.. code-block:: python
+Install your library and Run Test::
 
-    import pygitrepo
+    $ make test # unit test
+    $ make cov # code coverage test
+    $ make tox # multi python version test
 
-    package_name = "obama_care" # import obama_care
-    github_username = "Obama"
-    supported_py_ver = ["2.7.13", "3.4.6", "3.5.3", "3.6.2"]
-    author_name = "Obama"
-    author_email = "example@email.com"
-    license="MIT"
-    doc_host_bucket_name = "doc-host"
-    doc_service = "s3" # "none", "rtd", "s3"
+Build Document with auto-generated API reference::
 
-    if __name__ == "__main__":
-        pygitrepo.init(
-            package_name=package_name,
-            github_username=github_username,
-            supported_py_ver=supported_py_ver,
-            author_name=author_name,
-            author_email=author_email,
-            license=license,
-            doc_host_bucket_name=doc_host_bucket_name,
-            doc_service=doc_service,
-        )
+    $ make build_doc # build your document site
+    $ make view_doc # open your doc in browser
+    $ make deploy_doc # deploy your doc website to s3
 
-All available options and its definition can be found `HERE <https://pygitrepo.readthedocs.io/pygitrepo/cli.html#pygitrepo.cli.initiate_project>`_ or `THERE <http://www.wbh-doc.com.s3.amazonaws.com/pygitrepo/cli.html#pygitrepo.cli.initiate_project>`_.
+Want to publish to Python Package Index?, Let's do::
+
+    $ make publish
 
 
 .. _install:

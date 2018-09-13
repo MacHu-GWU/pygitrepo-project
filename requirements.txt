@@ -1,5 +1,6 @@
 jinja2
 pathlib_mate
 click
+six
 requests
 beautifulsoup4

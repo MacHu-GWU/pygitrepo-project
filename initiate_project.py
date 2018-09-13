@@ -16,8 +16,7 @@ author_email = "husanhe@gmail.com"
 license = "MIT"
 rtd_name = package_name
 doc_host_bucket_name = "your-s3-bucket-name"
-doc_service = "rtd"  # "none", "rtd", "s3"
-
+doc_service = pygitrepo.DocService.readthedoc  # None, "rtd", "s3"
 
 if __name__ == "__main__":
     pygitrepo.init(
