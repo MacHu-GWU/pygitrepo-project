@@ -12,7 +12,7 @@ from os import walk, mkdir, getcwd
 
 import click
 from jinja2 import Template
-from pathlib_mate.pathlib import Path
+from pathlib_mate import Path
 
 from . import integrate, validation
 from .util import read, write
