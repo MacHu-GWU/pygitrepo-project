@@ -1,21 +1,20 @@
+Release v\ |release| (:ref:`What's new? <release_history>`).
+
 
 .. include:: ../../README.rst
+
 
 Table of Content
 ------------------------------------------------------------------------------
 
-.. toctree::
-   :maxdepth: 1
+.. articles::
 
-    Chinese Tutorial (中文文档点这里) <01-Chinese-Doc/index.rst>
-    English Tutorial <02-English-Doc/index.rst>
-    
 
-.. include:: author.rst
+.. include:: ../../AUTHORS.rst
 
 
 API Document
-------------
+------------------------------------------------------------------------------
 
 * :ref:`by Name <genindex>`
 * :ref:`by Structure <modindex>`

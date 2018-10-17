@@ -16,14 +16,8 @@ Then, you can go back here, and let ``pygitrepo`` to show you how to doing these
 
 If you already known these concepts well, you can skip the first section.
 
+
 Table of Content
 ------------------------------------------------------------------------------
 
-.. toctree::
-   :maxdepth: 1
-
-    Do Python Project in Professional Way <01-Do-Python-Project-in-Professional-Way/index.rst>
-    Setup your global environment before using pygitrepo <02-Setup-Your-Global-Env/index.rst>
-    Use pygitrepo <03-Use-Pygitrepo/index.rst>
-    pygitrepo File Skeleton <04-Pygitrepo-File-Skeleton/index.rst>
-    
+.. articles::

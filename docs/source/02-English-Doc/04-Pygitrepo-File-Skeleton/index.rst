@@ -61,6 +61,8 @@ A :green:`mature` python project should include these,
 
         |--- :ref:`README.rst`
 
+        |--- :ref:`readthedocs.yml`
+
         |--- :ref:`fixcode.py`
 
         |--- :ref:`release-history.rst`

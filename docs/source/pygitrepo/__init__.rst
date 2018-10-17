@@ -8,12 +8,12 @@ sub packages and modules
 ------------------------
 
 .. toctree::
-   :maxdepth: 1
+    :maxdepth: 1
 
-    version <version>
-    initiate_project <initiate_project>
-    util <util>
-    integrate <integrate>
     cli <cli>
+    initiate_project <initiate_project>
+    integrate <integrate>
+    util <util>
     validation <validation>
+    version <version>
     

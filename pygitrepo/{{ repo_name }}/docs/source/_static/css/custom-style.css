@@ -324,3 +324,13 @@ div.sphinxsidebar a {
     margin-right: auto;
     background-size: 35px 35px;
 }
+
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
+    content: " \25B4\25BE"
+}
+table.sortable tbody tr:nth-child(2n) td {
+  background: #ffffff;
+}
+table.sortable tbody tr:nth-child(2n+1) td {
+  background: #f2f2f2;
+}
