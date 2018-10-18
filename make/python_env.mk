@@ -147,7 +147,7 @@ ifeq (${DETECTED_OS}, Linux)
 endif
 
 
-BASH_PROFILE_FILE = "${HOME}/.bash_profile"
+BASH_PROFILE_FILE="${HOME}/.bash_profile"
 
 BIN_ACTIVATE="${BIN_DIR}/activate"
 BIN_PYTHON="${BIN_DIR}/python"
@@ -165,11 +165,10 @@ AWS_DOC_URL="http://${DOC_HOST_BUCKET_NAME}.s3.amazonaws.com/${PACKAGE_NAME}/ind
 
 PY_VERSION="${PY_VER_MAJOR}.${PY_VER_MINOR}.${PY_VER_MICRO}"
 
+
 .PHONY: help
 help: ## ** Show this help message
 	@perl -nle'print $& if m{^[a-zA-Z_-]+:.*?## .*$$}' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-
-	echo ${PKG_VERSION}
 
 
 #--- Make Commands ---

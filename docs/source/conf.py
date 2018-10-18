@@ -186,7 +186,11 @@ autodoc_member_order = 'bysource'
 # Enable custom css
 rst_prolog = '\n.. include:: .custom-style.rst\n'
 
+# Add data for Jinja2
+import os, sys
 from doc_data import doc_data
+
+sys.path.append(os.path.dirname(__file__))
 
 jinja_contexts = {
     "doc_data": {
