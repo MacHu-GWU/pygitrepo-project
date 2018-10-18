@@ -149,7 +149,7 @@ ifeq (${DETECTED_OS}, Linux)
 endif
 
 
-BASH_PROFILE_FILE = "${HOME}/.bash_profile"
+BASH_PROFILE_FILE="${HOME}/.bash_profile"
 
 BIN_ACTIVATE="${BIN_DIR}/activate"
 BIN_PYTHON="${BIN_DIR}/python"

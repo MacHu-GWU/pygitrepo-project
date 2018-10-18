@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # {{ package_name }} documentation build configuration file, created by
-# sphinx-quickstart on Mon Jul 17 14:40:39 2017.
+# sphinx-quickstart on Mon Jul 1 00:00:00 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -186,7 +186,11 @@ autodoc_member_order = 'bysource'
 # Enable custom css
 rst_prolog = '\n.. include:: .custom-style.rst\n'
 
-from doc_data import doc_data
+# Add data for Jinja2
+try:
+    from {{ package_name }}.docs import doc_data
+except:
+    doc_data = dict()
 
 jinja_contexts = {
     "doc_data": {
@@ -203,6 +207,8 @@ docfly.ApiReferenceDoc(
     package_name=package_name,
     ignored_package=[
         "%s.pkg" % package_name,
+        "%s.docs" % package_name,
+        "%s.tests" % package_name,
     ]
 ).fly()
 

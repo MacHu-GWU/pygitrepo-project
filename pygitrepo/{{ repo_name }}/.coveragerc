@@ -3,7 +3,8 @@
 [run]
 omit =
     {{ package_name }}/pkg/*
-    {{ package_name }}/zzz_ezinstall.py
+    {{ package_name }}/docs/*
+    {{ package_name }}/tests/*
 
 [report]
 # Regexes for lines to exclude from consideration
