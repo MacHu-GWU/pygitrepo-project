@@ -7,7 +7,7 @@ This script call pygitrepo-init from python.
 
 import pygitrepo
 
-package_name = "pygitrepo"
+package_name = "wotlkdoc"
 repo_name = None
 github_username = "MacHu-GWU"
 supported_py_ver = ["2.7.13", "3.4.6", "3.5.3", "3.6.2"]

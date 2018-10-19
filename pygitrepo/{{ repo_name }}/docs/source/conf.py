@@ -21,6 +21,7 @@
 # sys.path.insert(0, os.path.abspath('.'))
 
 from __future__ import unicode_literals
+import os
 from datetime import datetime
 import {{ package_name }}
 
@@ -184,7 +185,13 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 autodoc_member_order = 'bysource'
 
 # Enable custom css
-rst_prolog = '\n.. include:: .custom-style.rst\n'
+try:
+    custom_style_file_path = os.path.join(os.path.dirname(__file__), "_static", ".custom-style.rst")
+    with open(custom_style_file_path, "rb") as f:
+        custom_style_file_content = f.read().decode("utf-8")
+    rst_prolog = "\n" + custom_style_file_content + "\n"
+except:
+    pass
 
 # Add data for Jinja2
 try:
