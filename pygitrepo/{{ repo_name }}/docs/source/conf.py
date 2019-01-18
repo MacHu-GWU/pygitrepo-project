@@ -62,8 +62,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = '{{ package_name }}'
-copyright = '%s, Sanhe Hu' % datetime.utcnow().year
-author = 'Sanhe Hu'
+copyright = '%s, {{ author_name }}' % datetime.utcnow().year
+author = '{{ author_name }}'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -157,7 +157,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, '{{ package_name }}.tex', '{{ package_name }} Documentation',
-     u'Sanhe Hu', 'manual'),
+     u'{{ author_name }}', 'manual'),
 ]
 
 # -- Options for manual page output ---------------------------------------
