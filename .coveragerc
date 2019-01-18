@@ -3,6 +3,7 @@
 [run]
 omit =
     pygitrepo/cli.py
+    pygitrepo/docs/*
 
 [report]
 # Regexes for lines to exclude from consideration
