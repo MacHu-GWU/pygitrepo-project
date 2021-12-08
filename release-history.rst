@@ -4,7 +4,7 @@ Release and Version History
 ==============================================================================
 
 
-1.0.2 (TODO)
+1.0.3 (TODO)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
@@ -13,6 +13,13 @@ Release and Version History
 **Bugfixes**
 
 **Miscellaneous**
+
+
+1.0.2 (2021-12-08)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- add ``pgr get-value ${attribute_name}`` subcommand, so you can pass value from python to shell script
 
 
 1.0.1 (2021-12-07)
