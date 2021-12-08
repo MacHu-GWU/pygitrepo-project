@@ -1,0 +1,102 @@
+Metadata-Version: 2.1
+Name: pygitrepo
+Version: 1.0.1
+Summary: Package short description.
+Home-page: https://github.com/MacHu-GWU/pygitrepo-project
+Author: Sanhe Hu
+Author-email: husanhe@gmail.com
+Maintainer: Unknown
+License: MIT
+Download-URL: https://pypi.python.org/pypi/pygitrepo/1.0.1#downloads
+Platform: Windows
+Platform: MacOS
+Platform: Unix
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: Unix
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Provides-Extra: tests
+Provides-Extra: docs
+License-File: LICENSE.txt
+License-File: AUTHORS.rst
+
+
+.. image:: https://travis-ci.org/MacHu-GWU/pygitrepo-project.svg?branch=master
+    :target: https://travis-ci.org/MacHu-GWU/pygitrepo-project?branch=master
+
+.. image:: https://codecov.io/gh/MacHu-GWU/pygitrepo-project/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/MacHu-GWU/pygitrepo-project
+
+.. image:: https://img.shields.io/pypi/v/pygitrepo.svg
+    :target: https://pypi.python.org/pypi/pygitrepo
+
+.. image:: https://img.shields.io/pypi/l/pygitrepo.svg
+    :target: https://pypi.python.org/pypi/pygitrepo
+
+.. image:: https://img.shields.io/pypi/pyversions/pygitrepo.svg
+    :target: https://pypi.python.org/pypi/pygitrepo
+
+.. image:: https://img.shields.io/badge/STAR_Me_on_GitHub!--None.svg?style=social
+    :target: https://github.com/MacHu-GWU/pygitrepo-project
+
+------
+
+
+.. image:: https://img.shields.io/badge/Link-Document-blue.svg
+    :target: http://pygitrepo.my-docs.com/index.html
+
+.. image:: https://img.shields.io/badge/Link-API-blue.svg
+    :target: http://pygitrepo.my-docs.com/py-modindex.html
+
+.. image:: https://img.shields.io/badge/Link-Source_Code-blue.svg
+    :target: http://pygitrepo.my-docs.com/py-modindex.html
+
+.. image:: https://img.shields.io/badge/Link-Install-blue.svg
+    :target: `install`_
+
+.. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
+    :target: https://github.com/MacHu-GWU/pygitrepo-project
+
+.. image:: https://img.shields.io/badge/Link-Submit_Issue-blue.svg
+    :target: https://github.com/MacHu-GWU/pygitrepo-project/issues
+
+.. image:: https://img.shields.io/badge/Link-Request_Feature-blue.svg
+    :target: https://github.com/MacHu-GWU/pygitrepo-project/issues
+
+.. image:: https://img.shields.io/badge/Link-Download-blue.svg
+    :target: https://pypi.org/pypi/pygitrepo#files
+
+
+Welcome to ``pygitrepo`` Documentation
+==============================================================================
+
+Documentation for ``pygitrepo``.
+
+
+.. _install:
+
+Install
+------------------------------------------------------------------------------
+
+``pygitrepo`` is released on PyPI, so all you need is:
+
+.. code-block:: console
+
+    $ pip install pygitrepo
+
+To upgrade to latest version:
+
+.. code-block:: console
+
+    $ pip install --upgrade pygitrepo
+

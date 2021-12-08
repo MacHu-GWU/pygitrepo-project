@@ -1,2 +1,3 @@
-pathlib_mate    # autopep8 your code
-twine>=1.5.0    # make distribution archive
+pathlib_mate                    # autopep8 your code
+twine                           # make distribution archive
+wheel                           # make pre-compiled distribution package

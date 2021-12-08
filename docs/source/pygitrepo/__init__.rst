@@ -10,10 +10,11 @@ sub packages and modules
 .. toctree::
     :maxdepth: 1
 
-    version <version>
-    initiate_project <initiate_project>
-    util <util>
-    integrate <integrate>
-    cli <cli>
-    validation <validation>
+    cli <cli/__init__>
+    actions <actions>
+    color_print <color_print>
+    constants <constants>
+    helpers <helpers>
+    operation_system <operation_system>
+    repo_config <repo_config>
     
