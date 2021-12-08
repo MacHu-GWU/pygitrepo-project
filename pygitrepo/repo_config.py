@@ -113,20 +113,45 @@ class RepoConfig(
         """
         return os.getcwd()
 
-    IS_PYGITREPO_DIR = Derivable(cache=True)
+    def is_pygitrepo_root_dir(self, path):
+        """
+        Identify if a path is a valid python git repo directory.
+        It should have a ``.git`` directory and a pygitrepo config json file.
 
-    @IS_PYGITREPO_DIR.getter
-    def get_IS_PYGITREPO_DIR(self):
-        return os.path.exists(
-            os.path.join(
-                self.DIR_CWD.get_value(),
-                constants.PYGITREPO_CONFIG_FILE
-            )
+        :type path: str
+        :rtype: bool
+        """
+        dot_git_exists = os.path.exists(os.path.join(path, ".git"))
+        config_exists = os.path.exists(os.path.join(path, constants.PYGITREPO_CONFIG_FILE))
+        return dot_git_exists and config_exists
+
+    def locate_pygitrepo_root_dir(self):
+        """
+        Try to locate the pygitrepo root directory. It scan backward from the
+        current directory to the "/" (MacOS or Linux) or "C://" (Windows).
+        The first directory meets the criterial defined in :
+        """
+        cwd = self.DIR_CWD.get_value()
+        for _ in range(1000): # a path should have less than 1000 parts
+            if self.is_pygitrepo_root_dir(cwd):
+                return cwd
+            else:
+                previous_cwd = cwd
+                cwd = os.path.dirname(cwd)
+                if cwd == previous_cwd:
+                    break
+        raise EnvironmentError(
+            "cannot locate a valid pygitrepo directory "
+            "that has a `.git` dir and `{}` file".format(constants.PYGITREPO_CONFIG_FILE)
         )
 
     def read_pygitrepo_config_file(self):
+        """
+        Try to locate the pygitrepo config file.
+        """
+        pygitrepo_root_dir = self.locate_pygitrepo_root_dir()
         p = os.path.join(
-            self.DIR_CWD.get_value(),
+            pygitrepo_root_dir,
             constants.PYGITREPO_CONFIG_FILE
         )
         with open(p, "rb") as f:
@@ -142,9 +167,15 @@ class RepoConfig(
 
     # === Code File Structure
     # --- python project basics
+    DIR_PROJECT_ROOT = Derivable(cache=True)
+
+    @DIR_PROJECT_ROOT.getter
+    def get_DIR_PROJECT_ROOT(self):
+        return self.locate_pygitrepo_root_dir()
+
     @property
     def dir_project_root(self):
-        return self.DIR_CWD.get_value()
+        return self.DIR_PROJECT_ROOT.get_value()
 
     @property
     def path_readme(self):

@@ -4,7 +4,7 @@ Release and Version History
 ==============================================================================
 
 
-0.0.6 (TODO)
+1.0.2 (TODO)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
@@ -13,6 +13,13 @@ Release and Version History
 **Bugfixes**
 
 **Miscellaneous**
+
+
+1.0.1 (2021-12-07)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- ``pygitrepo`` now it is a zero dependency cli tools. A simplified version of ``pipenv``
 
 
 0.0.5 (TODO)

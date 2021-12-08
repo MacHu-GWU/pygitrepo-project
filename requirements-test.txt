@@ -2,3 +2,4 @@
 pytest                                  # test framework
 pytest-cov                              # coverage test
 tox                                     # matrix test framework
+awscli

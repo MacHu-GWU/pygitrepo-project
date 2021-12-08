@@ -29,7 +29,7 @@ def print_path(title, path):
         color = Fore.GREEN
     else:
         color = Fore.RED
-    msg = "{reset}- {cyan}{title}: {color}{path}".format(
+    msg = "{reset}- {cyan}{title}: {color}{path}{reset}".format(
         reset=Style.RESET_ALL,
         cyan=Fore.CYAN,
         color=color,

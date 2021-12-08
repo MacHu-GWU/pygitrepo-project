@@ -15,6 +15,7 @@ pygitrepo/_version.py
 pygitrepo/_version.pyc
 pygitrepo/actions.py
 pygitrepo/actions.pyc
+pygitrepo/cli.py
 pygitrepo/color_print.py
 pygitrepo/color_print.pyc
 pygitrepo/constants.py
@@ -34,13 +35,12 @@ pygitrepo.egg-info/top_level.txt
 pygitrepo/__pycache__/__init__.cpython-38.pyc
 pygitrepo/__pycache__/_version.cpython-38.pyc
 pygitrepo/__pycache__/actions.cpython-38.pyc
+pygitrepo/__pycache__/cli.cpython-38.pyc
 pygitrepo/__pycache__/color_print.cpython-38.pyc
 pygitrepo/__pycache__/constants.cpython-38.pyc
 pygitrepo/__pycache__/helpers.cpython-38.pyc
 pygitrepo/__pycache__/operation_system.cpython-38.pyc
 pygitrepo/__pycache__/repo_config.cpython-38.pyc
-pygitrepo/cli/__init__.py
-pygitrepo/cli/__pycache__/__init__.cpython-38.pyc
 pygitrepo/docs/__init__.py
 pygitrepo/docs/__pycache__/__init__.cpython-38.pyc
 pygitrepo/pkg/__init__.py

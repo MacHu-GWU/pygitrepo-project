@@ -39,7 +39,6 @@ class TestActions(object):
             actions.info(config)
             actions.build_lambda_source_code(config)
 
-
             # caution! don't clean up tox dir, if you are testing this in
             # tox environment, it will disturb other py version testing.
             # actions.clean_doc(config)

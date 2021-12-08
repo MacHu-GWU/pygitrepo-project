@@ -1,6 +1,6 @@
 
-.. image:: https://travis-ci.org/MacHu-GWU/pygitrepo-project.svg?branch=master
-    :target: https://travis-ci.org/MacHu-GWU/pygitrepo-project?branch=master
+.. image:: https://github.com/MacHu-GWU/pygitrepo-project/workflows/CI/badge.svg
+    :target: https://github.com/MacHu-GWU/pygitrepo-project/actions?query=workflow:CI
 
 .. image:: https://codecov.io/gh/MacHu-GWU/pygitrepo-project/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/MacHu-GWU/pygitrepo-project
@@ -48,7 +48,7 @@
 Welcome to ``pygitrepo`` Documentation
 ==============================================================================
 
-Documentation for ``pygitrepo``.
+``pygitrepo`` just released the 1.0.1!
 
 
 .. _install:
