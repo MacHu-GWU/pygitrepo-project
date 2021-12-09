@@ -10,7 +10,6 @@ from pygitrepo.actions import Actions, actions
 from pygitrepo.repo_config import RepoConfig
 from pygitrepo.pkg.mini_colorma import Fore, Style
 
-
 SUB_COMMAND = "sub_command"
 
 
@@ -39,6 +38,7 @@ for method_name, method in Actions.__dict__.items():
             help=Fore.CYAN + method._subcommand_help + Style.RESET_ALL
         )
         action_mapper[method._subcommand_name] = getattr(actions, method_name)
+
 
 # manually add more important subc  ```````ommand parser
 class AddtionalSubCommandEnum:
@@ -77,16 +77,18 @@ def main():  # pragma: no cover
     """
     Command Line Interface entry point.
     """
-    args = parser.parse_args()
+    # defined arguments stored in args, a named tuple object
+    # additional undefined arguments stored in unknown
+    args, unknown = parser.parse_known_args()
     if args.sub_command is None:
         parser.parse_args(["-h"])
         return
-    
+
     repo_config = RepoConfig()
     repo_config.read_pygitrepo_config_file()
 
     if args.sub_command in action_mapper:
-        action_mapper[args.sub_command](repo_config)
+        action_mapper[args.sub_command](repo_config, _args=unknown)
     elif args.sub_command == AddtionalSubCommandEnum.get_value:
         get_value(repo_config, args.attr_name)
     else:

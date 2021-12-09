@@ -1,6 +1,6 @@
 # User Settings
 pygitrepo_venv/
-pygitrepo.egg-info/
+pygitrepo.egg-info/*
 pygitrepo-*/
 
 # Byte-compiled / optimized / DLL files

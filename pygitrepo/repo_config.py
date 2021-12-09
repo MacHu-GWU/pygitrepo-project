@@ -132,7 +132,7 @@ class RepoConfig(
         The first directory meets the criterial defined in :
         """
         cwd = self.DIR_CWD.get_value()
-        for _ in range(1000): # a path should have less than 1000 parts
+        for _ in range(1000):  # a path should have less than 1000 parts
             if self.is_pygitrepo_root_dir(cwd):
                 return cwd
             else:
@@ -653,3 +653,29 @@ class RepoConfig(
         return "https://console.aws.amazon.com/lambda/home?#/layers/{layer_name}".format(
             layer_name=self.layer_name
         )
+
+    # AWS Lambda
+    # AWS Lambda with Chalice
+    @property
+    def dir_lambda_app(self):
+        return os.path.join(self.dir_project_root, "lambda_app")
+
+    @property
+    def dir_aws_chalice(self):
+        return os.path.join(self.dir_lambda_app, ".chalice")
+
+    @property
+    def path_aws_chalice_config_json(self):
+        return os.path.join(self.dir_aws_chalice, "config.json")
+
+    @property
+    def path_aws_chalice_app_py(self):
+        return os.path.join(self.dir_lambda_app, "app.py")
+
+    @property
+    def dir_aws_chalice_vendor(self):
+        return os.path.join(self.dir_aws_chalice, "vendor")
+
+    @property
+    def dir_aws_chalice_deployed(self):
+        return os.path.join(self.dir_aws_chalice, "deployed")

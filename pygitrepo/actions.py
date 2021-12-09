@@ -4,10 +4,11 @@ from __future__ import print_function, unicode_literals
 
 try:
     import typing
-except:
+except ImportError:  # pragma: no cover
     pass
 
 import os
+import shutil
 import subprocess
 import functools
 from zipfile import ZipFile
@@ -71,7 +72,7 @@ class Actions(object):
     @subcommand(
         help="** Create virtualenv for python package development.",
     )
-    def venv_up(self, config):
+    def venv_up(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -107,7 +108,7 @@ class Actions(object):
     @subcommand(
         help="** Remove the virtualenv for this project.",
     )
-    def venv_remove(self, config):
+    def venv_remove(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -136,6 +137,7 @@ class Actions(object):
         self,
         config,
         ignore_tox=False,
+        **kwargs
     ):
         """
         :type config: RepoConfig
@@ -167,7 +169,7 @@ class Actions(object):
     @subcommand(
         help="Uninstall the package from virtualenv.",
     )
-    def pip_uninstall(self, config):
+    def pip_uninstall(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -188,7 +190,7 @@ class Actions(object):
     @subcommand(
         help="** Install the package to virtualenv in editable mode.",
     )
-    def pip_dev_install(self, config):
+    def pip_dev_install(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -210,7 +212,7 @@ class Actions(object):
     @subcommand(
         help="Install the package to virtualenv in regular mode.",
     )
-    def pip_install(self, config):
+    def pip_install(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -231,7 +233,7 @@ class Actions(object):
     @subcommand(
         help="** Display useful information",
     )
-    def info(self, config):
+    def info(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -286,11 +288,10 @@ class Actions(object):
             config.dir_venv_site_packages_64,
         )
 
-
     @subcommand(
         help="** Install dev dependencies in requirements-dev.txt",
     )
-    def req_dev(self, config):
+    def req_dev(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -311,7 +312,7 @@ class Actions(object):
     @subcommand(
         help="Install doc dependencies in requirements-doc.txt",
     )
-    def req_doc(self, config):
+    def req_doc(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -332,7 +333,7 @@ class Actions(object):
     @subcommand(
         help="Install dev dependencies in requirements-test.txt",
     )
-    def req_test(self, config):
+    def req_test(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -353,7 +354,7 @@ class Actions(object):
     @subcommand(
         help="Display requirements file content",
     )
-    def req_info(self, config):
+    def req_info(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -413,7 +414,7 @@ class Actions(object):
         name="test-only",
         help="Run unit test with pytest.",
     )
-    def test_pytest_only(self, config): # pragma: no cover
+    def test_pytest_only(self, config, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
@@ -435,7 +436,7 @@ class Actions(object):
         name="test",
         help="** Run unit test with pytest. Start over, reuse nothing.",
     )
-    def test_pytest(self, config): # pragma: no cover
+    def test_pytest(self, config, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
@@ -448,7 +449,7 @@ class Actions(object):
         name="cov-only",
         help="Run code coverage test in pytest.",
     )
-    def test_cov_only(self, config): # pragma: no cover
+    def test_cov_only(self, config, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
@@ -473,7 +474,7 @@ class Actions(object):
         name="cov",
         help="** Run code coverage test in pytest. Start over, reuse nothing.",
     )
-    def test_cov(self, config): # pragma: no cover
+    def test_cov(self, config, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
@@ -487,7 +488,7 @@ class Actions(object):
         name="tox-only",
         help="Run matrix test in tox with pytest",
     )
-    def test_tox_only(self, config): # pragma: no cover
+    def test_tox_only(self, config, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
@@ -508,7 +509,7 @@ class Actions(object):
         name="tox",
         help="** Run matrix test in tox with pytest. Start over, reuse nothing.",
     )
-    def test_tox(self, config): # pragma: no cover
+    def test_tox(self, config, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
@@ -521,7 +522,7 @@ class Actions(object):
         name="pep8",
         help="Apply pep8 (https://www.python.org/dev/peps/pep-0008/) to source code and tests.",
     )
-    def reformat_pep8_code_style(self, config):
+    def reformat_pep8_code_style(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -542,7 +543,7 @@ class Actions(object):
     @subcommand(
         help="Build local documents with sphinx-doc.",
     )
-    def build_doc_only(self, config):
+    def build_doc_only(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -563,7 +564,7 @@ class Actions(object):
     @subcommand(
         help="** Build local documents with sphinx-doc, start over, reuse nothing.",
     )
-    def build_doc(self, config):
+    def build_doc(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -577,7 +578,7 @@ class Actions(object):
     @subcommand(
         help="Clear recently built local documents.",
     )
-    def clean_doc(self, config):
+    def clean_doc(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -594,7 +595,7 @@ class Actions(object):
     @subcommand(
         help="** View recently build local documents.",
     )
-    def view_doc(self, config):
+    def view_doc(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -698,7 +699,7 @@ class Actions(object):
     @subcommand(
         help="Deploy local html doc to S3 as versioned document",
     )
-    def deploy_doc_to_versioned(self, config):
+    def deploy_doc_to_versioned(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -712,7 +713,7 @@ class Actions(object):
     @subcommand(
         help="Deploy local html doc to S3 as latest document",
     )
-    def deploy_doc_to_latest(self, config):
+    def deploy_doc_to_latest(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -726,7 +727,7 @@ class Actions(object):
     @subcommand(
         help="Deploy local html doc to S3 as versioned document, and also as latest document optionally.",
     )
-    def deploy_doc(self, config):
+    def deploy_doc(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -749,7 +750,7 @@ class Actions(object):
         name="publish",
         help="** Publish this Package to https://pypi.org/.",
     )
-    def publish_to_pypi(self, config):
+    def publish_to_pypi(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -789,7 +790,7 @@ class Actions(object):
     @subcommand(
         help="Run Jupyter notebook locally.",
     )
-    def run_jupyter_notebook(self, config):
+    def run_jupyter_notebook(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -806,7 +807,7 @@ class Actions(object):
     @subcommand(
         help="Build AWS Lambda source code zip file.",
     )
-    def build_lambda_source_code(self, config):
+    def build_lambda_source_code(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -903,7 +904,7 @@ class Actions(object):
     @subcommand(
         help="Upload AWS Lambda source code zip file to S3.",
     )
-    def upload_lambda_source_code(self, config):
+    def upload_lambda_source_code(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -930,7 +931,7 @@ class Actions(object):
     @subcommand(
         help="Build lambda layer using a AWS lambda runtime compatible docker image.",
     )
-    def build_lambda_layer(self, config):
+    def build_lambda_layer(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -965,7 +966,7 @@ class Actions(object):
     @subcommand(
         help="Upload AWS Lambda layer zip file to S3.",
     )
-    def upload_lambda_layer(self, config):
+    def upload_lambda_layer(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -976,7 +977,7 @@ class Actions(object):
     @subcommand(
         help="Deploy recently built AWS lambda layer.",
     )
-    def deploy_lambda_layer(self, config):
+    def deploy_lambda_layer(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -1039,15 +1040,99 @@ class Actions(object):
 
     @subcommand(
         name="bud-lambda-layer",
-        help="Build, upload and deploy a new AWS lambda layer.",
+        help="** Build, upload and deploy a new AWS lambda layer.",
     )
-    def build_upload_deploy_lambda_layer(self, config):
+    def build_upload_deploy_lambda_layer(self, config, **kwargs):
         """
         :type config: RepoConfig
         """
         self.build_lambda_layer(config)
         self.upload_lambda_layer(config)
         self.deploy_lambda_layer(config)
+
+    def _ensure_chalice_lambda_app_dir(self, config):
+        """
+        :type config: RepoConfig
+        """
+        files = [
+            config.path_aws_chalice_config_json,
+            config.path_aws_chalice_app_py,
+        ]
+        for p in files:
+            if not os.path.exists(p):
+                raise ValueError("{} not exists".format(p))
+
+    @subcommand(
+        help="** Deploy AWS Lambda app with AWS Chalice.",
+    )
+    def chalice_deploy(self, config, **kwargs):
+        """
+        :type config: RepoConfig
+        """
+        pgr_print(
+            "{cyan}Deploy AWS Lambda app with AWS Chalice".format(
+                cyan=Fore.CYAN,
+                reset=Style.RESET_ALL,
+            )
+        )
+
+        self._ensure_chalice_lambda_app_dir(config)
+
+        # reset the ``vendor/`` dir
+        remove_if_exists(config.dir_aws_chalice_vendor)
+        makedir_if_not_exists(config.dir_aws_chalice_vendor)
+
+        # copy source code to vendor dir
+        for dirname, _, basename_list in os.walk(config.dir_python_lib):
+            relpath = os.path.relpath(dirname, config.dir_project_root)
+            target_dir = os.path.join(config.dir_aws_chalice_vendor, relpath)
+            if not target_dir.endswith("__pycache__"):
+                makedir_if_not_exists(target_dir)
+            for basename in basename_list:
+                # ignore .pyc, .pyo, __pycache__
+                if basename.endswith(".pyc") \
+                    or basename.endswith(".pyo") \
+                    or dirname.endswith("__pycache__"):
+                    continue
+                source_path = os.path.join(dirname, basename)
+                target_path = os.path.join(target_dir, basename)
+                shutil.copyfile(source_path, target_path)
+
+        args = [
+            config.path_venv_bin_chalice, "deploy",
+            "--project-dir", config.dir_lambda_app,
+        ]
+        args.extend(kwargs["_args"])
+        aws_profile = config.AWS_LAMBDA_DEPLOY_AWS_PROFILE.get_value()
+        if aws_profile is not None:
+            args.extend(["--profile", aws_profile])
+        subprocess.call(args)
+
+    @subcommand(
+        help="** Delete AWS Lambda app with AWS Chalice.",
+    )
+    def chalice_delete(self, config, **kwargs):
+        """
+        :type config: RepoConfig
+        """
+        pgr_print(
+            "{cyan}Delete AWS Lambda app with AWS Chalice".format(
+                cyan=Fore.CYAN,
+                reset=Style.RESET_ALL,
+            )
+        )
+        self._ensure_chalice_lambda_app_dir(config)
+
+        args = [
+            config.path_venv_bin_chalice, "delete",
+            "--project-dir", config.dir_lambda_app,
+        ]
+        args.extend(kwargs["_args"])
+        aws_profile = config.AWS_LAMBDA_DEPLOY_AWS_PROFILE.get_value()
+        if aws_profile is not None:
+            args.extend(["--profile", aws_profile])
+
+        subprocess.call(args)
 
 
 actions = Actions()

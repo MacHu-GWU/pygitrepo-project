@@ -4,7 +4,7 @@ Release and Version History
 ==============================================================================
 
 
-1.0.3 (TODO)
+1.0.4 (TODO)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
@@ -15,11 +15,18 @@ Release and Version History
 **Miscellaneous**
 
 
+1.0.3 (2021-12-08)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- Add AWS Chalice support, made AWS Lambda deployment easier.
+
+
 1.0.2 (2021-12-08)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
-- add ``pgr get-value ${attribute_name}`` subcommand, so you can pass value from python to shell script
+- add ``pgr get-value ${attribute_name}`` subcommand, so you can pass value from python to shell scriptpgr
 
 
 1.0.1 (2021-12-07)
