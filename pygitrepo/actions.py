@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+"""
+This module implements the ``pygitrepo`` Python development workflow
+best practice logics.
+"""
+
 from __future__ import print_function, unicode_literals
 
 try:
@@ -17,7 +22,7 @@ from .pkg.mini_six import input
 from .pkg.fingerprint import fingerprint
 from .repo_config import RepoConfig
 from .operation_system import (
-    IS_WINDOWS, IS_MACOS, IS_LINUX, IS_JAVA,
+    IS_WINDOWS, IS_MACOS, IS_LINUX,
     OPEN_COMMAND
 )
 from .helpers import (
@@ -27,12 +32,11 @@ from .helpers import (
     make_s3_console_url,
     s3_uri_to_url,
     s3_key_smart_join,
-    ensure_s3_object,
     ensure_s3_dir,
-    is_s3_object_exists,
+    copy_python_code,
 )
 from .color_print import (
-    Fore, Back, Style, TAB,
+    Fore, Style, TAB,
     pgr_print, pgr_print_done, print_path, print_line, colorful_path,
 )
 
@@ -54,6 +58,7 @@ def subcommand(
         else:
             func._subcommand_name = name.replace("_", "-")
         func._subcommand_help = help
+        func._is_subcommand = True
 
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -66,13 +71,22 @@ def subcommand(
 
 
 class Actions(object):
+    """
+    A class container that includes ``pgr`` CLI interface logic.
+    Each command method wrapped with a :func:`subcommand` decorator is a
+    underlying logic for ``pgr ${subcommand}``.
+
+    Usually each function has a ``**kwargs`` optional keyword arguments.
+    It can be used to store optional command line arguments.
+    """
+
     # ==============================================================================
     # Python Package Development Related
     # ==============================================================================
     @subcommand(
         help="** Create virtualenv for python package development.",
     )
-    def venv_up(self, config, **kwargs):
+    def venv_up(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -91,24 +105,27 @@ class Actions(object):
                 )
             )
         else:
-            subprocess.call([
-                "virtualenv",
-                "-p",
-                config.path_bin_global_python,
-                config.dir_venv,
-            ])
-            subprocess.call([
-                config.path_venv_bin_pip,
-                "install",
-                "--upgrade",
-                "pip",
-            ])
+            if _dry_run is False:
+                # call the global virtualenv command
+                subprocess.call([
+                    "virtualenv",
+                    "-p",
+                    config.path_bin_global_python,
+                    config.dir_venv,
+                ])
+                # call pip install command
+                subprocess.call([
+                    config.path_venv_bin_pip,
+                    "install",
+                    "--upgrade",
+                    "pip",
+                ])
             pgr_print_done(indent=1)
 
     @subcommand(
         help="** Remove the virtualenv for this project.",
     )
-    def venv_remove(self, config, **kwargs):
+    def venv_remove(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -120,7 +137,8 @@ class Actions(object):
             )
         )
         if os.path.exists(config.dir_venv):
-            remove_if_exists(config.dir_venv)
+            if _dry_run is False:
+                remove_if_exists(config.dir_venv)
             pgr_print_done(indent=1)
         else:
             pgr_print(
@@ -137,6 +155,7 @@ class Actions(object):
         self,
         config,
         ignore_tox=False,
+        _dry_run=False,
         **kwargs
     ):
         """
@@ -162,14 +181,15 @@ class Actions(object):
                     path=p,
                 )
             )
-            remove_if_exists(p)
+            if _dry_run is False:
+                remove_if_exists(p)
 
         pgr_print_done(indent=1)
 
     @subcommand(
         help="Uninstall the package from virtualenv.",
     )
-    def pip_uninstall(self, config, **kwargs):
+    def pip_uninstall(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -179,61 +199,64 @@ class Actions(object):
                 package_name=config.PACKAGE_NAME.get_value(),
             )
         )
-        subprocess.call([
-            config.path_venv_bin_pip,
-            "uninstall",
-            "-y",
-            config.PACKAGE_NAME.get_value(),
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                config.path_venv_bin_pip,
+                "uninstall",
+                "-y",
+                config.PACKAGE_NAME.get_value(),
+            ])
         pgr_print_done(indent=1)
 
     @subcommand(
         help="** Install the package to virtualenv in editable mode.",
     )
-    def pip_dev_install(self, config, **kwargs):
+    def pip_dev_install(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
-        self.pip_uninstall(config)
+        self.pip_uninstall(config, _dry_run=_dry_run, **kwargs)
         pgr_print(
             "{cyan}install '{package_name}' to virtualenv in editable mode".format(
                 cyan=Fore.CYAN,
                 package_name=config.PACKAGE_NAME.get_value(),
             )
         )
-        subprocess.call([
-            config.path_venv_bin_pip,
-            "install",
-            "--editable",
-            config.dir_project_root,
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                config.path_venv_bin_pip,
+                "install",
+                "--editable",
+                config.dir_project_root,
+            ])
         pgr_print_done(indent=1)
 
     @subcommand(
         help="Install the package to virtualenv in regular mode.",
     )
-    def pip_install(self, config, **kwargs):
+    def pip_install(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
-        self.pip_uninstall(config)
+        self.pip_uninstall(config, _dry_run=_dry_run, **kwargs)
         pgr_print(
             "{cyan}install '{package_name}' to virtualenv".format(
                 cyan=Fore.CYAN,
                 package_name=config.PACKAGE_NAME.get_value(),
             )
         )
-        subprocess.call([
-            config.path_venv_bin_pip,
-            "install",
-            config.dir_project_root,
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                config.path_venv_bin_pip,
+                "install",
+                config.dir_project_root,
+            ])
         pgr_print_done(indent=1)
 
     @subcommand(
         help="** Display useful information",
     )
-    def info(self, config, **kwargs):
+    def info(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -291,7 +314,7 @@ class Actions(object):
     @subcommand(
         help="** Install dev dependencies in requirements-dev.txt",
     )
-    def req_dev(self, config, **kwargs):
+    def req_dev(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -301,18 +324,19 @@ class Actions(object):
                 reset=Style.RESET_ALL,
             )
         )
-        subprocess.call([
-            config.path_venv_bin_pip,
-            "install",
-            "-r",
-            config.path_requirements_dev_file,
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                config.path_venv_bin_pip,
+                "install",
+                "-r",
+                config.path_requirements_dev_file,
+            ])
         pgr_print_done(indent=1)
 
     @subcommand(
         help="Install doc dependencies in requirements-doc.txt",
     )
-    def req_doc(self, config, **kwargs):
+    def req_doc(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -322,18 +346,19 @@ class Actions(object):
                 reset=Style.RESET_ALL,
             )
         )
-        subprocess.call([
-            config.path_venv_bin_pip,
-            "install",
-            "-r",
-            config.path_requirements_doc_file,
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                config.path_venv_bin_pip,
+                "install",
+                "-r",
+                config.path_requirements_doc_file,
+            ])
         pgr_print_done(indent=1)
 
     @subcommand(
         help="Install dev dependencies in requirements-test.txt",
     )
-    def req_test(self, config, **kwargs):
+    def req_test(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -343,18 +368,19 @@ class Actions(object):
                 reset=Style.RESET_ALL,
             )
         )
-        subprocess.call([
-            config.path_venv_bin_pip,
-            "install",
-            "-r",
-            config.path_requirements_test_file,
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                config.path_venv_bin_pip,
+                "install",
+                "-r",
+                config.path_requirements_test_file,
+            ])
         pgr_print_done(indent=1)
 
     @subcommand(
         help="Display requirements file content",
     )
-    def req_info(self, config, **kwargs):
+    def req_info(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -414,7 +440,7 @@ class Actions(object):
         name="test-only",
         help="Run unit test with pytest.",
     )
-    def test_pytest_only(self, config, **kwargs):  # pragma: no cover
+    def test_pytest_only(self, config, _dry_run=False, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
@@ -425,31 +451,33 @@ class Actions(object):
                 dir_tests=config.dir_tests,
             )
         )
-        subprocess.call([
-            config.path_venv_bin_pytest,
-            config.dir_tests,
-            "-s",
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                config.path_venv_bin_pytest,
+                config.dir_tests,
+                "-s",
+            ])
         pgr_print_done(indent=1)
 
     @subcommand(
         name="test",
         help="** Run unit test with pytest. Start over, reuse nothing.",
     )
-    def test_pytest(self, config, **kwargs):  # pragma: no cover
+    def test_pytest(self, config, _dry_run=False, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
-        self.req_test(config)
-        self.pip_dev_install(config)
-        remove_if_exists(config.dir_pytest_cache)
-        self.test_pytest_only(config)
+        self.req_test(config, _dry_run=_dry_run, **kwargs)
+        self.pip_dev_install(config, _dry_run=_dry_run, **kwargs)
+        if _dry_run is False:
+            remove_if_exists(config.dir_pytest_cache)
+        self.test_pytest_only(config, _dry_run=_dry_run, **kwargs)
 
     @subcommand(
         name="cov-only",
         help="Run code coverage test in pytest.",
     )
-    def test_cov_only(self, config, **kwargs):  # pragma: no cover
+    def test_cov_only(self, config, _dry_run=False, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
@@ -460,35 +488,37 @@ class Actions(object):
                 dir_tests=config.dir_tests,
             )
         )
-        subprocess.call([
-            config.path_venv_bin_pytest,
-            config.dir_tests,
-            "-s",
-            "--cov={}".format(config.PACKAGE_NAME.get_value()),
-            "--cov-report", "term-missing",
-            "--cov-report", "annotate:{}".format(config.dir_coverage_annotate),
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                config.path_venv_bin_pytest,
+                config.dir_tests,
+                "-s",
+                "--cov={}".format(config.PACKAGE_NAME.get_value()),
+                "--cov-report", "term-missing",
+                "--cov-report", "annotate:{}".format(config.dir_coverage_annotate),
+            ])
         pgr_print_done(indent=1)
 
     @subcommand(
         name="cov",
         help="** Run code coverage test in pytest. Start over, reuse nothing.",
     )
-    def test_cov(self, config, **kwargs):  # pragma: no cover
+    def test_cov(self, config, _dry_run=False, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
-        self.req_test(config)
-        self.pip_dev_install(config)
-        remove_if_exists(config.dir_pytest_cache)
-        remove_if_exists(config.dir_coverage_annotate)
-        self.test_cov_only(config)
+        self.req_test(config, _dry_run=_dry_run, **kwargs)
+        self.pip_dev_install(config, _dry_run=_dry_run, **kwargs)
+        if _dry_run is False:
+            remove_if_exists(config.dir_pytest_cache)
+            remove_if_exists(config.dir_coverage_annotate)
+        self.test_cov_only(config, _dry_run=_dry_run, **kwargs)
 
     @subcommand(
         name="tox-only",
         help="Run matrix test in tox with pytest",
     )
-    def test_tox_only(self, config, **kwargs):  # pragma: no cover
+    def test_tox_only(self, config, _dry_run=False, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
@@ -499,34 +529,36 @@ class Actions(object):
                 dir_tests=config.dir_tests,
             )
         )
-        subprocess.call([
-            config.path_venv_bin_tox,
-            "--workdir \"{}\"".format(config.dir_project_root),
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                config.path_venv_bin_tox,
+                "--workdir \"{}\"".format(config.dir_project_root),
+            ])
         pgr_print_done(indent=1)
 
     @subcommand(
         name="tox",
         help="** Run matrix test in tox with pytest. Start over, reuse nothing.",
     )
-    def test_tox(self, config, **kwargs):  # pragma: no cover
+    def test_tox(self, config, _dry_run=False, **kwargs):  # pragma: no cover
         """
         :type config: RepoConfig
         """
-        self.req_test(config)
-        self.pip_dev_install(config)
-        remove_if_exists(config.dir_tox_cache)
-        self.test_tox_only(config)
+        self.req_test(config, _dry_run=_dry_run, **kwargs)
+        self.pip_dev_install(config, _dry_run=_dry_run, **kwargs)
+        if _dry_run is False:
+            remove_if_exists(config.dir_tox_cache)
+        self.test_tox_only(config, _dry_run=_dry_run, **kwargs)
 
     @subcommand(
         name="pep8",
         help="Apply pep8 (https://www.python.org/dev/peps/pep-0008/) to source code and tests.",
     )
-    def reformat_pep8_code_style(self, config, **kwargs):
+    def reformat_pep8_code_style(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
-        self.req_dev(config)
+        self.req_dev(config, _dry_run=_dry_run)
         pgr_print(
             "{cyan}reformat python code style, execute {reset}{reformat_script}".format(
                 cyan=Fore.CYAN,
@@ -534,16 +566,17 @@ class Actions(object):
                 reformat_script=config.path_fix_code_style_script,
             )
         )
-        subprocess.call([
-            config.path_venv_bin_python,
-            config.path_fix_code_style_script,
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                config.path_venv_bin_python,
+                config.path_fix_code_style_script,
+            ])
         pgr_print_done(indent=1)
 
     @subcommand(
         help="Build local documents with sphinx-doc.",
     )
-    def build_doc_only(self, config, **kwargs):
+    def build_doc_only(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -554,31 +587,33 @@ class Actions(object):
                 doc_build_html=config.dir_sphinx_doc_build_html,
             )
         )
-        subprocess.call([
-            "make",
-            "-C", config.dir_sphinx_doc,
-            "html",
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                "make",
+                "-C", config.dir_sphinx_doc,
+                "html",
+            ])
         pgr_print_done(indent=1)
 
     @subcommand(
         help="** Build local documents with sphinx-doc, start over, reuse nothing.",
     )
-    def build_doc(self, config, **kwargs):
+    def build_doc(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
-        self.req_doc(config)
-        self.pip_dev_install(config)
-        remove_if_exists(config.dir_sphinx_doc_build_html)
-        remove_if_exists(os.path.join(
-            config.dir_sphinx_doc_source, config.PACKAGE_NAME.get_value()))
-        self.build_doc_only(config)
+        self.req_doc(config, _dry_run=_dry_run, **kwargs)
+        self.pip_dev_install(config, _dry_run=_dry_run, **kwargs)
+        if _dry_run is False:
+            remove_if_exists(config.dir_sphinx_doc_build)
+            remove_if_exists(os.path.join(
+                config.dir_sphinx_doc_source, config.PACKAGE_NAME.get_value()))
+        self.build_doc_only(config, _dry_run=_dry_run, **kwargs)
 
     @subcommand(
         help="Clear recently built local documents.",
     )
-    def clean_doc(self, config, **kwargs):
+    def clean_doc(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -589,13 +624,14 @@ class Actions(object):
                 doc_build=config.dir_sphinx_doc_build,
             )
         )
-        remove_if_exists(config.dir_sphinx_doc_build)
+        if _dry_run is False:
+            remove_if_exists(config.dir_sphinx_doc_build)
         pgr_print_done(indent=1)
 
     @subcommand(
         help="** View recently build local documents.",
     )
-    def view_doc(self, config, **kwargs):
+    def view_doc(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -618,7 +654,9 @@ class Actions(object):
         else:
             raise ValueError
 
-        subprocess.call([OPEN_COMMAND, path_doc_index_html])
+        if _dry_run is False:
+            subprocess.call([OPEN_COMMAND, path_doc_index_html])
+
         pgr_print_done(indent=1)
 
     def _deploy_doc_to_s3(
@@ -627,6 +665,8 @@ class Actions(object):
         doc_version,
         s3_uri_doc_dir,
         doc_host_aws_profile,
+        _dry_run=False,
+        **kwargs
     ):
         """
         Deploy local html doc to S3.
@@ -663,7 +703,9 @@ class Actions(object):
         ]
         if doc_host_aws_profile is not None:
             args.extend(["--profile", doc_host_aws_profile])
-        subprocess.call(args)
+
+        if _dry_run is False:
+            subprocess.call(args)
 
         pgr_print(
             "{cyan}{tab}aws s3 sync {reset}{dir_sphinx_doc_build_html} {s3_uri_doc_dir}".format(
@@ -681,7 +723,9 @@ class Actions(object):
         ]
         if doc_host_aws_profile is not None:
             args.extend(["--profile", doc_host_aws_profile])
-        subprocess.call(args)
+
+        if _dry_run is False:
+            subprocess.call(args)
 
         s3_console_url = s3_uri_to_url(s3_uri_doc_dir)
         pgr_print(
@@ -699,7 +743,7 @@ class Actions(object):
     @subcommand(
         help="Deploy local html doc to S3 as versioned document",
     )
-    def deploy_doc_to_versioned(self, config, **kwargs):
+    def deploy_doc_to_versioned(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -708,12 +752,14 @@ class Actions(object):
             doc_version="versioned",
             s3_uri_doc_dir=config.s3_uri_doc_dir_versioned,
             doc_host_aws_profile=config.DOC_HOST_AWS_PROFILE.get_value(),
+            _dry_run=_dry_run,
+            **kwargs
         )
 
     @subcommand(
         help="Deploy local html doc to S3 as latest document",
     )
-    def deploy_doc_to_latest(self, config, **kwargs):
+    def deploy_doc_to_latest(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -722,17 +768,19 @@ class Actions(object):
             doc_version="latest",
             s3_uri_doc_dir=config.s3_uri_doc_dir_latest,
             doc_host_aws_profile=config.DOC_HOST_AWS_PROFILE.get_value(),
+            _dry_run=_dry_run,
+            **kwargs
         )
 
     @subcommand(
         help="Deploy local html doc to S3 as versioned document, and also as latest document optionally.",
     )
-    def deploy_doc(self, config, **kwargs):
+    def deploy_doc(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
         pgr_print("{cyan}deploy doc from local to s3 ...".format(cyan=Fore.CYAN))
-        self.deploy_doc_to_versioned(config)
+        self.deploy_doc_to_versioned(config, _dry_run=_dry_run, **kwargs)
 
         pgr_print(
             "{cyan}also deploy latest doc (y/n)?".format(
@@ -742,7 +790,7 @@ class Actions(object):
         )
         entered = str(input("")).lower().strip()
         if entered in ["y", "yes"]:
-            self.deploy_doc_to_latest(config)
+            self.deploy_doc_to_latest(config, _dry_run=_dry_run, **kwargs)
         else:
             pgr_print_done(indent=1)
 
@@ -750,12 +798,12 @@ class Actions(object):
         name="publish",
         help="** Publish this Package to https://pypi.org/.",
     )
-    def publish_to_pypi(self, config, **kwargs):
+    def publish_to_pypi(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
-        self.req_dev(config)
-        self.pip_dev_install(config)
+        self.req_dev(config, _dry_run=_dry_run, **kwargs)
+        self.pip_dev_install(config, _dry_run=_dry_run, **kwargs)
         pgr_print(
             "{cyan}Publish {package_name} to {reset}https://pypi.org/project/{package_name}/".format(
                 cyan=Fore.CYAN,
@@ -763,25 +811,27 @@ class Actions(object):
                 package_name=config.PACKAGE_NAME.get_value()
             )
         )
-        remove_if_exists(config.dir_pypi_build)
-        remove_if_exists(config.dir_pypi_distribute)
-        remove_if_exists(config.dir_pypi_egg)
+        if _dry_run is False:
+            remove_if_exists(config.dir_pypi_build)
+            remove_if_exists(config.dir_pypi_distribute)
+            remove_if_exists(config.dir_pypi_egg)
 
         cwd = os.getcwd()
         os.chdir(config.dir_project_root)
         try:
-            subprocess.call([
-                config.path_venv_bin_python,
-                "setup.py",
-                "sdist",
-                "bdist_wheel",
-                "--universal",
-            ])
-            subprocess.call([
-                config.path_venv_bin_twine,
-                "upload",
-                "dist/*",
-            ])
+            if _dry_run is False:
+                subprocess.call([
+                    config.path_venv_bin_python,
+                    "setup.py",
+                    "sdist",
+                    "bdist_wheel",
+                    "--universal",
+                ])
+                subprocess.call([
+                    config.path_venv_bin_twine,
+                    "upload",
+                    "dist/*",
+                ])
         except:
             pass
         os.chdir(cwd)
@@ -790,16 +840,16 @@ class Actions(object):
     @subcommand(
         help="Run Jupyter notebook locally.",
     )
-    def run_jupyter_notebook(self, config, **kwargs):
+    def run_jupyter_notebook(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
         pgr_print("{cyan}run jupyter notebook ...".format(cyan=Fore.CYAN))
-
-        subprocess.call([
-            config.path_venv_bin_jupyter,
-            "notebook",
-        ])
+        if _dry_run is False:
+            subprocess.call([
+                config.path_venv_bin_jupyter,
+                "notebook",
+            ])
 
     # ==============================================================================
     # AWS Lambda Related
@@ -807,7 +857,7 @@ class Actions(object):
     @subcommand(
         help="Build AWS Lambda source code zip file.",
     )
-    def build_lambda_source_code(self, config, **kwargs):
+    def build_lambda_source_code(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -822,22 +872,24 @@ class Actions(object):
         # filter all python source code need to add to the zip
         to_zip_list = list()
         for dirname, _, basename_list in os.walk(config.dir_python_lib):
+            # ignore __pycache__
+            if dirname.endswith("__pycache__"):
+                continue
             for basename in basename_list:
-                # ignore .pyc, .pyo, __pycache__
-                if basename.endswith(".pyc") \
-                    or basename.endswith(".pyo") \
-                    or dirname.endswith("__pycache__"):
+                # ignore .pyc, .pyo,
+                if basename.endswith(".pyc") or basename.endswith(".pyo"):
                     continue
                 source_path = os.path.join(dirname, basename)
                 archive_path = os.path.relpath(source_path, config.dir_project_root)
                 to_zip_list.append((source_path, archive_path))
 
-        makedir_if_not_exists(config.dir_lambda_build)
-        remove_if_exists(config.path_lambda_build_source)
+        if _dry_run is False:
+            makedir_if_not_exists(config.dir_lambda_build)
+            remove_if_exists(config.path_lambda_build_source)
 
-        with ZipFile(config.path_lambda_build_source, "w") as f:
-            for source_path, archive_path in to_zip_list:
-                f.write(source_path, archive_path)
+            with ZipFile(config.path_lambda_build_source, "w") as f:
+                for source_path, archive_path in to_zip_list:
+                    f.write(source_path, archive_path)
 
         pgr_print_done(indent=1)
 
@@ -846,6 +898,8 @@ class Actions(object):
         config,
         source_or_layer,
         path,
+        _dry_run=False,
+        **kwargs
     ):
         """
         :type config: RepoConfig
@@ -889,7 +943,8 @@ class Actions(object):
             aws_profile = config.AWS_LAMBDA_DEPLOY_AWS_PROFILE.get_value()
             if aws_profile is not None:
                 args.extend(["--profile", aws_profile])
-            subprocess.call(args)
+            if _dry_run is False:
+                subprocess.call(args)
             pgr_print_done(indent=1)
         else:
             pgr_print(
@@ -904,12 +959,16 @@ class Actions(object):
     @subcommand(
         help="Upload AWS Lambda source code zip file to S3.",
     )
-    def upload_lambda_source_code(self, config, **kwargs):
+    def upload_lambda_source_code(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
         self._upload_lambda_zip(
-            config, source_or_layer="source code", path=config.path_lambda_build_source
+            config,
+            source_or_layer="source code",
+            path=config.path_lambda_build_source,
+            _dry_run=_dry_run,
+            **kwargs
         )
 
     def _find_docker(self):
@@ -931,7 +990,7 @@ class Actions(object):
     @subcommand(
         help="Build lambda layer using a AWS lambda runtime compatible docker image.",
     )
-    def build_lambda_layer(self, config, **kwargs):
+    def build_lambda_layer(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -953,31 +1012,37 @@ class Actions(object):
             "bin",
             "container-only-build-lambda-layer.sh",
         )
-        subprocess.call([
-            path_bin_docker, "run",
-            "-v", "{}:{}".format(
-                config.dir_project_root,
-                config.AWS_LAMBDA_BUILD_DOCKER_IMAGE_WORKSPACE_DIR.get_value(),
-            ),
-            "--rm", config.AWS_LAMBDA_BUILD_DOCKER_IMAGE.get_value(),
-            "bash", container_only_build_lbd_layer_script_path,
-        ])
+
+        if _dry_run is False:
+            subprocess.call([
+                path_bin_docker, "run",
+                "-v", "{}:{}".format(
+                    config.dir_project_root,
+                    config.AWS_LAMBDA_BUILD_DOCKER_IMAGE_WORKSPACE_DIR.get_value(),
+                ),
+                "--rm", config.AWS_LAMBDA_BUILD_DOCKER_IMAGE.get_value(),
+                "bash", container_only_build_lbd_layer_script_path,
+            ])
 
     @subcommand(
         help="Upload AWS Lambda layer zip file to S3.",
     )
-    def upload_lambda_layer(self, config, **kwargs):
+    def upload_lambda_layer(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
         self._upload_lambda_zip(
-            config, source_or_layer="layer", path=config.path_lambda_build_layer
+            config,
+            source_or_layer="layer",
+            path=config.path_lambda_build_layer,
+            _dry_run=_dry_run,
+            **kwargs
         )
 
     @subcommand(
         help="Deploy recently built AWS lambda layer.",
     )
-    def deploy_lambda_layer(self, config, **kwargs):
+    def deploy_lambda_layer(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -1005,8 +1070,9 @@ class Actions(object):
             )
             args = [
                 "aws", "lambda", "publish-layer-version",
-                "--layer-name", config.layer_name,
-                "--description", "dependency layer for all functions in '{}' project".format(config.layer_name),
+                "--layer-name", config.aws_lambda_layer_name,
+                "--description",
+                "dependency layer for all functions in '{}' project".format(config.aws_lambda_layer_name),
                 "--content", "S3Bucket={},S3Key={}".format(
                     config.AWS_LAMBDA_DEPLOY_S3_BUCKET.get_value(), key,
                 ),
@@ -1018,7 +1084,8 @@ class Actions(object):
             aws_profile = config.AWS_LAMBDA_DEPLOY_AWS_PROFILE.get_value()
             if aws_profile is not None:
                 args.extend(["--profile", aws_profile])
-            subprocess.call(args)
+            if _dry_run is False:
+                subprocess.call(args)
             pgr_print(
                 "{cyan}{tab}open {reset}{url} {cyan}to view layer".format(
                     cyan=Fore.CYAN,
@@ -1042,13 +1109,13 @@ class Actions(object):
         name="bud-lambda-layer",
         help="** Build, upload and deploy a new AWS lambda layer.",
     )
-    def build_upload_deploy_lambda_layer(self, config, **kwargs):
+    def build_upload_deploy_lambda_layer(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
-        self.build_lambda_layer(config)
-        self.upload_lambda_layer(config)
-        self.deploy_lambda_layer(config)
+        self.build_lambda_layer(config, _dry_run=_dry_run)
+        self.upload_lambda_layer(config, _dry_run=_dry_run, **kwargs)
+        self.deploy_lambda_layer(config, _dry_run=_dry_run, **kwargs)
 
     def _ensure_chalice_lambda_app_dir(self, config):
         """
@@ -1065,7 +1132,7 @@ class Actions(object):
     @subcommand(
         help="** Deploy AWS Lambda app with AWS Chalice.",
     )
-    def chalice_deploy(self, config, **kwargs):
+    def chalice_deploy(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -1078,40 +1145,34 @@ class Actions(object):
 
         self._ensure_chalice_lambda_app_dir(config)
 
-        # reset the ``vendor/`` dir
+        # reset the ``vendor`` dir
         remove_if_exists(config.dir_aws_chalice_vendor)
         makedir_if_not_exists(config.dir_aws_chalice_vendor)
 
-        # copy source code to vendor dir
-        for dirname, _, basename_list in os.walk(config.dir_python_lib):
-            relpath = os.path.relpath(dirname, config.dir_project_root)
-            target_dir = os.path.join(config.dir_aws_chalice_vendor, relpath)
-            if not target_dir.endswith("__pycache__"):
-                makedir_if_not_exists(target_dir)
-            for basename in basename_list:
-                # ignore .pyc, .pyo, __pycache__
-                if basename.endswith(".pyc") \
-                    or basename.endswith(".pyo") \
-                    or dirname.endswith("__pycache__"):
-                    continue
-                source_path = os.path.join(dirname, basename)
-                target_path = os.path.join(target_dir, basename)
-                shutil.copyfile(source_path, target_path)
+        # copy source code to ``vendor`` dir
+        copy_python_code(
+            config.dir_python_lib,
+            config.dir_aws_chalice_vendor_source,
+        )
 
+        # invoke chalice cli
         args = [
-            config.path_venv_bin_chalice, "deploy",
+            config.path_venv_bin_chalice,
             "--project-dir", config.dir_lambda_app,
+            "deploy",
         ]
         args.extend(kwargs["_args"])
         aws_profile = config.AWS_LAMBDA_DEPLOY_AWS_PROFILE.get_value()
         if aws_profile is not None:
             args.extend(["--profile", aws_profile])
-        subprocess.call(args)
+
+        if _dry_run is False:
+            subprocess.call(args)
 
     @subcommand(
         help="** Delete AWS Lambda app with AWS Chalice.",
     )
-    def chalice_delete(self, config, **kwargs):
+    def chalice_delete(self, config, _dry_run=False, **kwargs):
         """
         :type config: RepoConfig
         """
@@ -1124,15 +1185,17 @@ class Actions(object):
         self._ensure_chalice_lambda_app_dir(config)
 
         args = [
-            config.path_venv_bin_chalice, "delete",
+            config.path_venv_bin_chalice,
             "--project-dir", config.dir_lambda_app,
+            "delete",
         ]
         args.extend(kwargs["_args"])
         aws_profile = config.AWS_LAMBDA_DEPLOY_AWS_PROFILE.get_value()
         if aws_profile is not None:
             args.extend(["--profile", aws_profile])
 
-        subprocess.call(args)
+        if _dry_run is False:
+            subprocess.call(args)
 
 
 actions = Actions()

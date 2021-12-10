@@ -45,7 +45,7 @@ def colorful_path(path):
     if os.path.exists(path):
         color = Fore.GREEN
     else:
-        color = Fore.Red
+        color = Fore.RED
     return "{color}{path}{reset}".format(
         color=color,
         path=path,

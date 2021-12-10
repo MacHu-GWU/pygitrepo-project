@@ -20,7 +20,6 @@ def colorful(message):
 parser = argparse.ArgumentParser(
     prog="pygitrepo",
 )
-
 subparser = parser.add_subparsers(
     title="sub commands",
     description="run automation script",
@@ -36,6 +35,11 @@ for method_name, method in Actions.__dict__.items():
         subcommand_parser = subparser.add_parser(
             name=method._subcommand_name,
             help=Fore.CYAN + method._subcommand_help + Style.RESET_ALL
+        )
+        subcommand_parser.add_argument(
+            "--do-dry-run",
+            action="store_true",
+            help="display info, doesn't take effect",
         )
         action_mapper[method._subcommand_name] = getattr(actions, method_name)
 
@@ -80,6 +84,7 @@ def main():  # pragma: no cover
     # defined arguments stored in args, a named tuple object
     # additional undefined arguments stored in unknown
     args, unknown = parser.parse_known_args()
+    print(args)
     if args.sub_command is None:
         parser.parse_args(["-h"])
         return
@@ -88,7 +93,11 @@ def main():  # pragma: no cover
     repo_config.read_pygitrepo_config_file()
 
     if args.sub_command in action_mapper:
-        action_mapper[args.sub_command](repo_config, _args=unknown)
+        action_mapper[args.sub_command](
+            repo_config,
+            _dry_run=args.do_dry_run,
+            _args=unknown,
+        )
     elif args.sub_command == AddtionalSubCommandEnum.get_value:
         get_value(repo_config, args.attr_name)
     else:

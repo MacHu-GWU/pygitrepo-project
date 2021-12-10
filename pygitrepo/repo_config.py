@@ -7,19 +7,23 @@ from .pkg.configirl import ConfigClass, Constant, Derivable
 from . import constants
 from .helpers import (
     join_s3_uri,
-    split_s3_uri,
     s3_key_smart_join,
-    make_s3_console_url,
-    s3_uri_to_url,
     strip_comments,
 )
 from .operation_system import (
-    OS_NAME, IS_WINDOWS, IS_MACOS, IS_LINUX, IS_JAVA, OPEN_COMMAND
+    IS_WINDOWS, IS_MACOS, IS_LINUX,
 )
 
 
 class _BaseConfig(ConfigClass):
+    """
+    The abstract config class.
+    """
+
     def ensure_attr_not_none(self, attr_name):
+        """
+        raise error if an config attribute value is None.
+        """
         value = getattr(self, attr_name).get_value()
         if value is None:
             raise ValueError(
@@ -30,6 +34,9 @@ class _BaseConfig(ConfigClass):
 
 
 class _RepoConfig(_BaseConfig):
+    """
+    Basic Python GitHub Repo related config.
+    """
     PACKAGE_NAME = Constant(default=None)
     GITHUB_ACCOUNT = Constant(default=None)
     GITHUB_REPO_NAME = Constant(default=None)
@@ -39,10 +46,18 @@ class _RepoConfig(_BaseConfig):
     DEV_PY_VER_MINOR = Constant(default=None)
     DEV_PY_VER_MICRO = Constant(default=None)
 
+    # python versions you want to test in matrix test
     TOX_TEST_VERSIONS = Constant(default=lambda: list())
 
     @property
+    def package_name(self):
+        return self.PACKAGE_NAME.get_value()
+
+    @property
     def package_name_slugify(self):
+        """
+        The slugified version of package name. No underscore, only use dash.
+        """
         return self.PACKAGE_NAME.get_value().replace("_", "-")
 
 
@@ -94,23 +109,26 @@ class RepoConfig(
     _DocConfig,
     _AWSLambdaConfig,
 ):
+    """
+    Python Github Repo Config Object
+    """
     DIR_CWD = Derivable(cache=True)
+    """
+    By default, it is where you originally call this script.
+
+    let's say you are at ``/here`` and you have ``a.sh`` and ``b.py``::
+
+        /
+        /first/a.sh
+        /first/second/b.py
+
+    If you made a ``bash ./first/a.sh`` and ``a.sh`` actually calls
+    ``python /first/second/b.py``. You will see the ``os.getcwd()`` still
+    returns the corret dir where you initially run the bash command in ``b.py``
+    """
 
     @DIR_CWD.getter
     def get_DIR_CWD(self):
-        """
-        By default, it is where you originally call this script.
-
-        let's say you are at ``/here`` and you have ``a.sh`` and ``b.py``::
-
-            /
-            /first/a.sh
-            /first/second/b.py
-
-        If you made a ``bash ./first/a.sh`` and ``a.sh`` actually calls
-        ``python /first/second/b.py``. You will see the ``os.getcwd()`` still
-        returns the corret dir where you initially run the bash command in ``b.py``
-        """
         return os.getcwd()
 
     def is_pygitrepo_root_dir(self, path):
@@ -160,6 +178,14 @@ class RepoConfig(
         self.update(config_data)
 
     DIR_HOME = Derivable(cache=True)
+    r"""
+    The current User home directory.
+    
+    - On Windows: C:\Users\${username}
+    - On Mac: /Users/${username}
+    - On Linux: depends on what Linux. on Ubuntu / Redhat / CentOS 
+        it is /home/${username}
+    """
 
     @DIR_HOME.getter
     def get_DIR_HOME(self):
@@ -383,6 +409,10 @@ class RepoConfig(
 
     @property
     def dir_venv(self):
+        """
+        The virtual environment directory location. It should have
+        a ``bin`` (MacOS) or a ``Script`` (Windows) folder in it.
+        """
         return os.path.join(self.dir_all_python_versioned_venv, self.venv_name)
 
     @property
@@ -645,37 +675,65 @@ class RepoConfig(
         )
 
     @property
-    def layer_name(self):
+    def aws_lambda_layer_name(self):
         return self.PACKAGE_NAME.get_value()
 
     @property
     def url_lambda_layer_console(self):
         return "https://console.aws.amazon.com/lambda/home?#/layers/{layer_name}".format(
-            layer_name=self.layer_name
+            layer_name=self.aws_lambda_layer_name
         )
 
     # AWS Lambda
     # AWS Lambda with Chalice
     @property
     def dir_lambda_app(self):
+        """
+        example: ${dir_project_root}/lambda_app
+        """
         return os.path.join(self.dir_project_root, "lambda_app")
 
     @property
     def dir_aws_chalice(self):
+        """
+        example: ${dir_project_root}/lambda_app/.chalice
+        """
         return os.path.join(self.dir_lambda_app, ".chalice")
 
     @property
     def path_aws_chalice_config_json(self):
+        """
+        example: ${dir_project_root}/lambda_app/.chalice/config.json
+        """
         return os.path.join(self.dir_aws_chalice, "config.json")
 
     @property
     def path_aws_chalice_app_py(self):
+        """
+        example: ${dir_project_root}/lambda_app/app.py
+        """
         return os.path.join(self.dir_lambda_app, "app.py")
 
     @property
     def dir_aws_chalice_vendor(self):
+        """
+        example: ${dir_project_root}/lambda_app/vendor
+        """
         return os.path.join(self.dir_aws_chalice, "vendor")
 
     @property
+    def dir_aws_chalice_vendor_source(self):
+        """
+        example: ${dir_project_root}/lambda_app/vendor/${package_name}
+        """
+        return os.path.join(
+            self.dir_aws_chalice_vendor,
+            self.PACKAGE_NAME.get_value(),
+        )
+
+    @property
     def dir_aws_chalice_deployed(self):
+        """
+        example: ${dir_project_root}/lambda_app/.chalice/deployed
+        """
         return os.path.join(self.dir_aws_chalice, "deployed")

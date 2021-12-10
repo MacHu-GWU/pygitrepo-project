@@ -13,9 +13,11 @@ from pygitrepo.helpers import (
     ensure_s3_dir,
     remove_if_exists,
     makedir_if_not_exists,
+    copy_python_code,
 )
 
 dir_here = os.path.dirname(os.path.abspath(__file__))
+dir_project_root = os.path.dirname(dir_here)
 
 
 def test_split_s3_uri():
@@ -92,6 +94,12 @@ def test_makedir_if_not_exists():
 
     remove_if_exists(p)
     assert os.path.exists(p) is False
+
+
+def test_copy_python_code():
+    from_dir = os.path.join(dir_project_root, "pygitrepo")
+    to_dir = os.path.join(dir_project_root, "tmp", "pygitrepo")
+    copy_python_code(from_dir, to_dir)
 
 
 if __name__ == "__main__":

@@ -4,11 +4,26 @@ Release and Version History
 ==============================================================================
 
 
-1.0.4 (TODO)
+1.0.5 (TODO)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
 **Minor Improvements**
+
+**Bugfixes**
+
+**Miscellaneous**
+
+
+1.0.4 (2021-12-09)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+- add ``--do-dry-run`` options for most of the sub command. It is for ``pgr`` subcommand action only. For underlying command line such as ``aws``, you can use the underlying command line specific dry run option. This ``--do-dry-run`` is trying to avoid option name conflict.
+
+**Minor Improvements**
+
+- Set up doc skeleton, add python development workflow doc
 
 **Bugfixes**
 

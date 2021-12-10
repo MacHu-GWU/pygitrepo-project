@@ -177,3 +177,31 @@ def makedir_if_not_exists(abspath):
     if os.path.exists(abspath):
         return
     os.makedirs(abspath)
+
+
+def copy_python_code(from_dir, to_dir):
+    """
+    Copy all python source code from one directory to another. Skip
+    ``__pycache__``, ``.pyc`` and ``.pyo`` files.
+
+    :type from_dir: str
+    :type to_dir: str
+    """
+    remove_if_exists(to_dir)
+    pycache = "__pycache__"
+    for dirname, _, basename_list in os.walk(from_dir):
+        relpath = os.path.relpath(dirname, from_dir)
+        target_dir = os.path.abspath(os.path.join(to_dir, relpath))
+        if target_dir.endswith(pycache):
+            continue
+        else:
+            makedir_if_not_exists(target_dir)
+        for basename in basename_list:
+            # ignore .pyc, the compiled byte code
+            # and .pyo, the optimized import cache
+            if basename.endswith(".pyc") or basename.endswith(".pyo"):
+                continue
+            else:
+                source_path = os.path.join(dirname, basename)
+                target_path = os.path.join(target_dir, basename)
+                shutil.copyfile(source_path, target_path)
