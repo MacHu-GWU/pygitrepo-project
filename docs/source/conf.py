@@ -26,13 +26,6 @@ from datetime import datetime
 import pygitrepo
 
 # -- General configuration ------------------------------------------------
-p = "/Users/sanhehu/Documents/GitHub/pygitrepo-project/tmp.txt"
-
-def log_this(msg):
-    with open(p, "a") as f:
-        f.write(msg + "\n")
-
-
 # If your documentation needs a minimal Sphinx version, state it here.
 #
 # needs_sphinx = '1.0'
@@ -234,5 +227,3 @@ docfly.ApiReferenceDoc(
         "%s.tests" % package_name,
     ]
 ).fly()
-
-log_this("good")

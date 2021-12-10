@@ -48,7 +48,14 @@
 Welcome to ``pygitrepo`` Documentation
 ==============================================================================
 
-``pygitrepo`` just released the 1.0.1!
+`Full document is here <https://pygitrepo.readthedocs.io/>`_
+
+``pygitrepo`` is a Python command line tool that simplifies the Python development, build, test, deploy, publish workflow, using the BEST PRACTICE from a 15 years Python developer.
+
+Features:
+
+1. Python library / open source PyPI project development workflow.
+2. AWS Lambda based Microservice development, test, deployment workflow.
 
 
 .. _install:
