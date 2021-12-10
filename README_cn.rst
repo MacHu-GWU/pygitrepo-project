@@ -47,7 +47,8 @@
 欢迎来到 ``pygitrepo`` 文档
 ==============================================================================
 
-`完整文档在这 <https://pygitrepo.readthedocs.io/>`_
+- `English document is here <https://pygitrepo.readthedocs.io/index.html>`_
+- `中文文档在此 <https://pygitrepo.readthedocs.io/index_cn.html>`_
 
 ``pygitrepo`` 是一款简化 Python 库开发工作流的命令行工具. 内置了包括: 虚拟环境, 单元测试, 文档构建, 文档部署, 打包分发, CI 自动化, 多操作系统多版本矩阵测试, 等很多开发模式的 **最佳实践**.
 

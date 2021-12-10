@@ -48,7 +48,8 @@
 Welcome to ``pygitrepo`` Documentation
 ==============================================================================
 
-`Full document is here <https://pygitrepo.readthedocs.io/>`_
+- `English document is here <https://pygitrepo.readthedocs.io/index.html>`_
+- `中文文档在此 <https://pygitrepo.readthedocs.io/index_cn.html>`_
 
 ``pygitrepo`` is a Python command line tool that simplifies the Python development, build, test, deploy, publish workflow, using the BEST PRACTICE from a 15 years Python developer.
 

@@ -1,9 +1,9 @@
 - :ref:`English <en_install_pygitrepo>`
 - :ref:`中文 <cn_install_pygitrepo>`
 
-.. _cn_install_pygitrepo:
+.. _en_install_pygitrepo:
 
-安装 pygitrepo
+Install pygitrepo
 ==============================================================================
 
 .. contents::
@@ -12,15 +12,15 @@
     :local:
 
 
-1. 安装 ``pygitrepo`` 命令行工具
+1. Install ``pygitrepo`` Command Line Tool
 ------------------------------------------------------------------------------
 
-``pygitrepo`` 本身是一个 python 库, 只不过是一个自带命令行接口的库, 就和 ``pip``, ``pipenv``, ``virtualenv`` 类似. 所以你可以用 ``pip`` 命令安装.
+``pygitrepo``itself is a Python library with a command line interface. Like the other similar python library ``pip``, ``pipenv``, ``virtualenv``. You can install it with ``pip``.
 
 .. code-block:: bash
 
-    # 安装并升级到最新版本
+    # install and upgrade to latest
     $ pip install pygitrepo --upgrade
 
-    # 测试 ``pgr`` 命令
+    # test with ``pgr`` command
     $ pgr
