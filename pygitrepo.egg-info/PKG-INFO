@@ -37,8 +37,9 @@ License-File: AUTHORS.rst
 .. image:: https://codecov.io/gh/MacHu-GWU/pygitrepo-project/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/MacHu-GWU/pygitrepo-project
 
-.. image:: https://img.shields.io/pypi/v/pygitrepo.svg
-    :target: https://pypi.python.org/pypi/pygitrepo
+.. image:: https://readthedocs.org/projects/pygitrepo/badge/?version=latest
+    :target: https://pygitrepo.readthedocs.io/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://img.shields.io/pypi/l/pygitrepo.svg
     :target: https://pypi.python.org/pypi/pygitrepo
@@ -80,7 +81,15 @@ License-File: AUTHORS.rst
 Welcome to ``pygitrepo`` Documentation
 ==============================================================================
 
-``pygitrepo`` just released the 1.0.1!
+- `English document is here <https://pygitrepo.readthedocs.io/index.html>`_
+- `中文文档在此 <https://pygitrepo.readthedocs.io/index_cn.html>`_
+
+``pygitrepo`` is a Python command line tool that simplifies the Python development, build, test, deploy, publish workflow, using the BEST PRACTICE from a 15 years Python developer.
+
+Features:
+
+1. Python library / open source PyPI project development workflow.
+2. AWS Lambda based Microservice development, test, deployment workflow.
 
 
 .. _install:

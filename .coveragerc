@@ -6,6 +6,8 @@ omit =
     pygitrepo/pkg/*.py
     pygitrepo/docs/*.py
     pygitrepo/tests/*.py
+    pygitrepo/actions.py
+    pygitrepo/cli.py
 
 
 [report]
