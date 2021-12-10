@@ -1,13 +1,13 @@
 Metadata-Version: 2.1
 Name: pygitrepo
-Version: 1.0.4
+Version: 1.0.5
 Summary: Package short description.
-Home-page: https://github.com/MacHu-GWU/pygitrepo-project
+Home-page: https://github.com/MacHu-GWU/
 Author: Sanhe Hu
 Author-email: husanhe@gmail.com
 Maintainer: Unknown
 License: MIT
-Download-URL: https://pypi.python.org/pypi/pygitrepo/1.0.4#downloads
+Download-URL: https://pypi.python.org/pypi/pygitrepo/1.0.5#downloads
 Platform: Windows
 Platform: MacOS
 Platform: Unix

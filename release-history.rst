@@ -4,7 +4,7 @@ Release and Version History
 ==============================================================================
 
 
-1.0.5 (TODO)
+1.0.6 (TODO)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
@@ -13,6 +13,13 @@ Release and Version History
 **Bugfixes**
 
 **Miscellaneous**
+
+
+1.0.5 (2021-12-09)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Miscellaneous**
+
+- fix unnecessary print
 
 
 1.0.4 (2021-12-09)
@@ -24,10 +31,6 @@ Release and Version History
 **Minor Improvements**
 
 - Set up doc skeleton, add python development workflow doc
-
-**Bugfixes**
-
-**Miscellaneous**
 
 
 1.0.3 (2021-12-08)

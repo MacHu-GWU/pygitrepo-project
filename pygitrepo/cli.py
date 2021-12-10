@@ -84,7 +84,7 @@ def main():  # pragma: no cover
     # defined arguments stored in args, a named tuple object
     # additional undefined arguments stored in unknown
     args, unknown = parser.parse_known_args()
-    print(args)
+
     if args.sub_command is None:
         parser.parse_args(["-h"])
         return
