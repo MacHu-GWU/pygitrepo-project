@@ -4,6 +4,7 @@ try:
     import typing
 except:  # pragma: no cover
     pass
+
 import os
 import shutil
 from re import findall
@@ -107,11 +108,17 @@ def s3_uri_to_url(s3_uri):
 
 
 def ensure_s3_object(s3_key_or_uri):
+    """
+    Raise exception if the string is not in valid format for a AWS S3 object
+    """
     if s3_key_or_uri.endswith("/"):
         raise ValueError("'{}' doesn't represent s3 object!".format(s3_key_or_uri))
 
 
 def ensure_s3_dir(s3_key_or_uri):
+    """
+    Raise exception if the string is not in valid format for a AWS S3 directory
+    """
     if not s3_key_or_uri.endswith("/"):
         raise ValueError("'{}' doesn't represent s3 dir!".format(s3_key_or_uri))
 
@@ -148,6 +155,11 @@ def strip_comments(string, comment_symbols=frozenset(('#', '//'))):  # pragma: n
 
 
 def remove_if_exists(abspath):
+    """
+    Remove a file or a directory (and it's files) if exists.
+
+    :type abspath: str
+    """
     if not os.path.exists(abspath):
         return
     if os.path.isdir(abspath):
@@ -157,26 +169,11 @@ def remove_if_exists(abspath):
 
 
 def makedir_if_not_exists(abspath):
+    """
+    Make a directory and all required parent folder if not exists.
+
+    :type abspath: str
+    """
     if os.path.exists(abspath):
         return
     os.makedirs(abspath)
-
-
-
-def is_s3_object_exists(s3_client, bucket=None, key=None, s3_uri=None):
-    """
-    Check if an s3 object exists
-
-    :rtype: bool
-    """
-    if s3_uri is None:
-        if (bucket is None) or (key is None):
-            raise ValueError
-        else:
-            pass
-    else:
-        if (bucket is not None) or (key is not None):
-            raise ValueError
-        bucket, key = split_s3_uri(s3_uri)
-    ensure_s3_object(key)
-    s3_client.head_object(Bucket=bucket, Key=key)
