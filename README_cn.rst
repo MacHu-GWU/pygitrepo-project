@@ -4,8 +4,9 @@
 .. image:: https://codecov.io/gh/MacHu-GWU/pygitrepo-project/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/MacHu-GWU/pygitrepo-project
 
-.. image:: https://img.shields.io/pypi/v/pygitrepo.svg
-    :target: https://pypi.python.org/pypi/pygitrepo
+.. image:: https://readthedocs.org/projects/pygitrepo/badge/?version=latest
+    :target: https://pygitrepo.readthedocs.io/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://img.shields.io/pypi/l/pygitrepo.svg
     :target: https://pypi.python.org/pypi/pygitrepo
