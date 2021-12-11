@@ -13,7 +13,6 @@ except ImportError:  # pragma: no cover
     pass
 
 import os
-import shutil
 import subprocess
 import functools
 from zipfile import ZipFile

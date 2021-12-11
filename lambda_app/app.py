@@ -2,7 +2,7 @@
 
 from chalice import Chalice
 
-app = Chalice(app_name="pygitrep")
+app = Chalice(app_name="pygitrepo")
 
 
 @app.lambda_function(name="hello-world")

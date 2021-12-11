@@ -4,7 +4,7 @@ Release and Version History
 ==============================================================================
 
 
-1.0.6 (TODO)
+1.0.7 (TODO)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
@@ -13,6 +13,14 @@ Release and Version History
 **Bugfixes**
 
 **Miscellaneous**
+
+
+1.0.6 (2021-12-10)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Bugfixes**
+
+- fix a bug that AWS Chalice deploy that package the vendor files to the wrong location
+- remove unnecessary config fields
 
 
 1.0.5 (2021-12-09)

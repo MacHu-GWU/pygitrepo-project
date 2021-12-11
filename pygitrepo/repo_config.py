@@ -38,16 +38,11 @@ class _RepoConfig(_BaseConfig):
     Basic Python GitHub Repo related config.
     """
     PACKAGE_NAME = Constant(default=None)
-    GITHUB_ACCOUNT = Constant(default=None)
-    GITHUB_REPO_NAME = Constant(default=None)
 
     # The main python version you use for development
     DEV_PY_VER_MAJOR = Constant(default=None)
     DEV_PY_VER_MINOR = Constant(default=None)
     DEV_PY_VER_MICRO = Constant(default=None)
-
-    # python versions you want to test in matrix test
-    TOX_TEST_VERSIONS = Constant(default=lambda: list())
 
     @property
     def package_name(self):
@@ -287,13 +282,6 @@ class RepoConfig(
     @property
     def dir_coverage_annotate(self):
         return os.path.join(self.dir_project_root, ".coverage.annotate")
-
-    @property
-    def dir_pyenv_local_versions_for_tox(self):
-        try:
-            return " ".join(self.TOX_TEST_VERSIONS.get_value())
-        except:
-            return constants.UNKNOWN
 
     @property
     def dir_tox_cache(self):
@@ -719,7 +707,7 @@ class RepoConfig(
         """
         example: ${dir_project_root}/lambda_app/vendor
         """
-        return os.path.join(self.dir_aws_chalice, "vendor")
+        return os.path.join(self.dir_lambda_app, "vendor")
 
     @property
     def dir_aws_chalice_vendor_source(self):
