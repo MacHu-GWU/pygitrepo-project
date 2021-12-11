@@ -24,3 +24,13 @@
 
     # 测试 ``pgr`` 命令
     $ pgr
+
+
+2. 修改 ``pygitrepo-config.json``
+------------------------------------------------------------------------------
+
+``pgr`` 命令要求你的 git 工作目录的根目录下有一个 ``pygitrepo-config.json`` 文件, 也就是跟 ``.git`` 文件夹在同一个目录. 这决定了你当前所在的目录是否是一个 合法的, 和 ``pygitrepo`` 工具兼容的 Python Github Repo.
+
+这个文件的主要作用是告知你想用哪个 Python 版本进行本地开发, 想用什么服务托管你的文档网站, 等等.
+
+如果你的整个 Repo 的初始文件是用 https://github.com/MacHu-GWU/cookiecutter-pygitrepo 工具自动生成的, 那么你可以直接打开 ``pygitrepo-config.json`` 文件, 根据里面的注释的指引修改你的配置. 一个具体的例子可以参考 https://github.com/MacHu-GWU/pygitrepo-project/blob/master/pygitrepo-config.json.

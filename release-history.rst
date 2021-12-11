@@ -22,6 +22,10 @@ Release and Version History
 - fix a bug that AWS Chalice deploy that package the vendor files to the wrong location
 - remove unnecessary config fields
 
+**Miscellaneous**
+
+- add ``pygitrepo-config.json`` document
+
 
 1.0.5 (2021-12-09)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
