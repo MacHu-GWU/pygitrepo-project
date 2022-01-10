@@ -362,7 +362,7 @@ class RepoConfig(
         if IS_WINDOWS:
             return "/c/Python{}.{}/python.exe".format(self.DEV_PY_VER_MAJOR, self.DEV_PY_VER_MINOR)
         elif IS_MACOS or IS_LINUX:
-            return os.path.join(
+            pyenv_python = os.path.join(
                 self.DIR_HOME.get_value(),
                 ".pyenv",
                 "shims",
@@ -371,6 +371,14 @@ class RepoConfig(
                     self.DEV_PY_VER_MINOR.get_value(),
                 )
             )
+            if os.path.exists(pyenv_python):
+                return pyenv_python
+
+            global_python = "python{}.{}".format(
+                self.DEV_PY_VER_MAJOR.get_value(),
+                self.DEV_PY_VER_MINOR.get_value(),
+            )
+            return global_python
         else:
             raise EnvironmentError
 

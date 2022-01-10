@@ -4,6 +4,17 @@ Release and Version History
 ==============================================================================
 
 
+1.0.8 (TODO)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+**Minor Improvements**
+
+**Bugfixes**
+
+**Miscellaneous**
+
+
 1.0.7 (TODO)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
@@ -11,6 +22,8 @@ Release and Version History
 **Minor Improvements**
 
 **Bugfixes**
+
+- Fix a bug that the ``pgr build-doc`` cannot locate the virtualenv sphinx.
 
 **Miscellaneous**
 

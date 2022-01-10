@@ -587,6 +587,10 @@ class Actions(object):
             )
         )
         if _dry_run is False:
+            # equivalent to source ./bin/activate
+            os.environ["PATH"] = config.dir_venv_bin + os.pathsep + os.environ.get("PATH", "")
+            os.environ["VIRTUAL_ENV"] = config.dir_venv
+            # call sphinx make html command
             subprocess.call([
                 "make",
                 "-C", config.dir_sphinx_doc,
