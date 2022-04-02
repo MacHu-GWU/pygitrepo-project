@@ -15,17 +15,16 @@ Release and Version History
 **Miscellaneous**
 
 
-1.0.7 (TODO)
+1.0.7 (2022-04-02)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
-**Minor Improvements**
+- use ``coverage html`` for report, drop ``coverage annotate`` support.
 
 **Bugfixes**
 
+- Fix a bug that the ``pgr venv-up`` cannot locate the correct global python
 - Fix a bug that the ``pgr build-doc`` cannot locate the virtualenv sphinx.
-
-**Miscellaneous**
 
 
 1.0.6 (2021-12-10)
