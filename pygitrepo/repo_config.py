@@ -284,6 +284,14 @@ class RepoConfig(
         return os.path.join(self.dir_project_root, ".coverage.annotate")
 
     @property
+    def dir_coverage_html(self):
+        return os.path.join(self.dir_project_root, "htmlcov")
+
+    @property
+    def path_coverage_html_index(self):
+        return os.path.join(self.dir_coverage_html, "index.html")
+
+    @property
     def dir_tox_cache(self):
         return os.path.join(self.dir_project_root, ".tox")
 
@@ -478,7 +486,10 @@ class RepoConfig(
 
     @property
     def path_venv_bin_activate(self):
-        return os.path.join(self.dir_venv_bin, "activate")
+        if IS_WINDOWS:
+            return os.path.join(self.dir_venv_bin, "activate.bat")
+        elif IS_MACOS or IS_LINUX:
+            return os.path.join(self.dir_venv_bin, "activate")
 
     @property
     def path_venv_bin_pytest(self):

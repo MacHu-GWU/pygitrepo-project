@@ -20,6 +20,9 @@ class TestRepoConfig(object):
             if isinstance(v, property):
                 getattr(config, k)
 
+        assert config.package_name == "pygitrepo"
+        assert config.package_name_slugify == "pygitrepo"
+
 
 if __name__ == "__main__":
     import os

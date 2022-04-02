@@ -287,8 +287,9 @@ class Actions(object):
             )
         elif IS_MACOS or IS_LINUX:
             print_line(
-                "- {cyan}activate venv command: source {path}".format(
+                "- {cyan}activate venv command: {reset}source {path}".format(
                     cyan=Fore.CYAN,
+                    reset=Style.RESET_ALL,
                     path=colorful_path(config.path_venv_bin_activate),
                 )
             )
@@ -494,7 +495,7 @@ class Actions(object):
                 "-s",
                 "--cov={}".format(config.PACKAGE_NAME.get_value()),
                 "--cov-report", "term-missing",
-                "--cov-report", "annotate:{}".format(config.dir_coverage_annotate),
+                "--cov-report", "html:{}".format(config.dir_coverage_html),
             ])
         pgr_print_done(indent=1)
 
@@ -512,6 +513,29 @@ class Actions(object):
             remove_if_exists(config.dir_pytest_cache)
             remove_if_exists(config.dir_coverage_annotate)
         self.test_cov_only(config, _dry_run=_dry_run, **kwargs)
+
+    @subcommand(
+        help="** View code coverage test result in web browser.",
+    )
+    def view_cov(self, config, _dry_run=False, **kwargs):
+        """
+        :type config: RepoConfig
+        """
+        pgr_print(
+            "{cyan}Open code coverage test html result in web browser{reset}{cov_html_index}".format(
+                cyan=Fore.CYAN,
+                reset=Style.RESET_ALL,
+                cov_html_index=config.path_coverage_html_index,
+            )
+        )
+
+        if not os.path.exists(config.path_coverage_html_index):
+            raise ValueError("code coverage test results not available yet, you may run 'pgr cov' first!")
+
+        if _dry_run is False:
+            subprocess.call([OPEN_COMMAND, config.path_coverage_html_index])
+
+        pgr_print_done(indent=1)
 
     @subcommand(
         name="tox-only",
@@ -655,7 +679,7 @@ class Actions(object):
         ):
             path_doc_index_html = os.path.join(config.dir_sphinx_doc_build_html, "README.html")
         else:
-            raise ValueError
+            raise ValueError("documentation index html file not exists!")
 
         if _dry_run is False:
             subprocess.call([OPEN_COMMAND, path_doc_index_html])
