@@ -452,11 +452,14 @@ class Actions(object):
             )
         )
         if _dry_run is False:
+            cwd = os.getcwd()
+            os.chdir(config.dir_project_root)
             subprocess.call([
                 config.path_venv_bin_pytest,
                 config.dir_tests,
                 "-s",
             ])
+            os.chdir(cwd)
         pgr_print_done(indent=1)
 
     @subcommand(
@@ -489,6 +492,8 @@ class Actions(object):
             )
         )
         if _dry_run is False:
+            cwd = os.getcwd()
+            os.chdir(config.dir_project_root)
             subprocess.call([
                 config.path_venv_bin_pytest,
                 config.dir_tests,
@@ -497,6 +502,7 @@ class Actions(object):
                 "--cov-report", "term-missing",
                 "--cov-report", "html:{}".format(config.dir_coverage_html),
             ])
+            os.chdir(cwd)
         pgr_print_done(indent=1)
 
     @subcommand(
