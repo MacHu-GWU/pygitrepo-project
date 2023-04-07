@@ -20,8 +20,8 @@ jobs:
       matrix:
 #        os: ["ubuntu-latest", "windows-latest"]
         os: ["ubuntu-latest", ] # for debug only
-#        python-version: ["2.7", "3.6", "3.7", "3.8", "3.9", "3.10"]
-        python-version: ["3.6", ] # for debug only
+#        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.7", ] # for debug only
 #        exclude:
 #          - os: windows-latest # this is a useless exclude rules for demonstration use only
 #            python-version: 2.7
